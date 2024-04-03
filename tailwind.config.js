@@ -13,7 +13,9 @@ export default {
       colors: {
         "primary-dark": "#455832",
         primary: "#4C7838",
-        "primary-hover": "#455832",
+        "primary-hover": "#426831",
+        "primary-disabled": "#7c9772",
+        "primary-light": "#A6CC98",
       },
     },
   },
