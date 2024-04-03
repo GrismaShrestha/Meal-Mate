@@ -1,4 +1,15 @@
-function App() {
+import { Outlet } from "react-router-dom";
+
+export default function RootLayout() {
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
+}
+
+function Header() {
   return (
     <header className="bg-primary-dark text-gray-100">
       <div className="container py-2">
@@ -7,5 +18,3 @@ function App() {
     </header>
   );
 }
-
-export default App;
