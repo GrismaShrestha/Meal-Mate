@@ -5,3 +5,7 @@
 main {
   @apply py-8;
 }
+
+body {
+  font-family: "Inter";
+}

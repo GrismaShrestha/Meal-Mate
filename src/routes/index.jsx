@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import Homepage from "./Homepage";
+import GetStarted from "./GetStarted";
 
 export const router = createBrowserRouter([
   {
@@ -12,5 +13,9 @@ export const router = createBrowserRouter([
         element: <Homepage />,
       },
     ],
+  },
+  {
+    path: "/get-started",
+    element: <GetStarted />,
   },
 ]);

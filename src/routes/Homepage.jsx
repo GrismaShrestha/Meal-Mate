@@ -141,10 +141,12 @@ function ServiceEntry({ image, title, description }) {
         src={image}
         className="mx-auto mb-8 h-[150px] w-auto object-contain"
       />
-      <p className="mb-4 text-center text-2xl font-semibold text-primary-dark">
+      <p className="mb-4 text-center text-3xl font-medium text-primary-dark">
         {title}
       </p>
-      <p className="text-center text-xl text-primary-dark">{description}</p>
+      <p className="text-center text-2xl font-light text-primary-dark">
+        {description}
+      </p>
     </div>
   );
 }
