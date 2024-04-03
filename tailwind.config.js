@@ -16,6 +16,7 @@ export default {
         "primary-hover": "#426831",
         "primary-disabled": "#7c9772",
         "primary-light": "#A6CC98",
+        "primary-very-light": "#A0C592",
       },
     },
   },
