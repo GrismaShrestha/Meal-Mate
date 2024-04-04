@@ -12,7 +12,7 @@ export default function Button({
   return (
     <button
       className={twMerge(
-        "flex items-center justify-center rounded-md bg-primary px-8 py-2 transition-colors hover:bg-primary-hover disabled:bg-primary-disabled",
+        "flex items-center justify-center rounded-md bg-primary px-8 py-2 transition-colors hover:bg-primary-hover disabled:bg-primary-disabled text-gray-100",
         color == "white" &&
           "bg-white text-primary hover:bg-white hover:text-black",
         className,

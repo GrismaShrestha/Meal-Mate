@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
+import "@fontsource/inter"
 import "@fontsource/inter/100.css"
 import "@fontsource/inter/200.css"
 import "@fontsource/inter/300.css"
