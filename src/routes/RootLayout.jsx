@@ -1,6 +1,9 @@
 import { Outlet, Link } from "react-router-dom";
 import Button from "../components/Button";
 import { RxCaretRight } from "react-icons/rx";
+import { useUser } from "../hooks/auth";
+import { useLocalStorage } from "usehooks-ts";
+import { toast } from "react-toastify";
 
 const headerLinks = [
   {
@@ -123,10 +126,30 @@ function Header() {
 }
 
 function Auth() {
+  const { data: user } = useUser();
+  const [, , removeToken] = useLocalStorage("auth");
+
   return (
     <div className="flex items-center gap-4">
-      <p>Hi! Grishma</p>
-      <Button>Log out</Button>
+      {user ? (
+        <>
+          <p>Hi! {user.name}</p>
+          <Button
+            onClick={() => {
+              removeToken();
+              toast.success("Logged out successfully!", {
+                position: "bottom-right",
+              });
+            }}
+          >
+            Log out
+          </Button>
+        </>
+      ) : (
+        <Link to="/get-started">
+          <Button>Login / Register</Button>
+        </Link>
+      )}
     </div>
   );
 }

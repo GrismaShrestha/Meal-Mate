@@ -19,20 +19,37 @@ function DiscoverMeals() {
       <h1 className="mb-4 text-4xl font-semibold uppercase text-primary-dark">
         Discover Meals
       </h1>
-      <MealEntry
-        id={1}
-        title="Peanut Butter Smoothie"
-        image="http://localhost:8001/assets/image/peanut_butter.jpg"
-      />
+      <div className="flex gap-5">
+        <MealEntry
+          id={1}
+          name="Peanut Butter Smoothie"
+          image="http://localhost:8001/assets/image/peanut_butter.jpg"
+        />
+        <MealEntry
+          id={2}
+          name="Spring Roll"
+          image="http://localhost:8001/assets/image/spring_roll.jpeg"
+        />
+        <MealEntry
+          id={3}
+          name="Quinoa Salad"
+          image="http://localhost:8001/assets/image/quenioa_salad.jpeg"
+        />
+        <MealEntry
+          id={4}
+          name="Asian Noodles"
+          image="http://localhost:8001/assets/image/asian_noodles.PNG"
+        />
+      </div>
     </div>
   );
 }
 
 function MealEntry({ id, name, image }) {
   return (
-    <Link className="flex h-[300px] w-[250px] flex-col" to={`/meals/${id}`}>
-      <img src={image} className="w-full flex-grow object-contain" />
-      <p className="mb-2 text-center text-2xl">{name}</p>
+    <Link className="flex h-[350px] w-[350px] flex-col" to={`/meals/${id}`}>
+      <img src={image} className="h-[100px] w-[350px] flex-grow object-cover" />
+      <p className="my-4 text-center text-2xl">{name}</p>
       <Button className={"text-center text-white"}>Try now</Button>
     </Link>
   );

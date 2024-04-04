@@ -9,11 +9,11 @@ $axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   let token;
   if (config.url.startsWith("/admin")) {
-    token = localStorage.getItem("admin-token");
+    token = JSON.parse(localStorage.getItem("admin-auth"));
   } else {
-    token = localStorage.getItem("token");
+    token = JSON.parse(localStorage.getItem("auth"));
   }
-  // token xa vane
+  // If there is a token
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
