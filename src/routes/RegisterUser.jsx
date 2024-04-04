@@ -16,6 +16,7 @@ export default function RegisterUser() {
             label="Enter your full name"
             id="full-name"
             placeholder="Grishma Shrestha"
+            autoFocus
           />
           <TextInput
             label="Email"

@@ -3,6 +3,7 @@ import RootLayout from "./RootLayout";
 import Homepage from "./Homepage";
 import GetStarted from "./GetStarted";
 import RegisterUser from "./RegisterUser";
+import LoginUser from "./LoginUser";
 
 export const router = createBrowserRouter([
   {
@@ -22,5 +23,9 @@ export const router = createBrowserRouter([
   {
     path: "/register/user",
     element: <RegisterUser />,
+  },
+  {
+    path: "/login/user",
+    element: <LoginUser />,
   },
 ]);

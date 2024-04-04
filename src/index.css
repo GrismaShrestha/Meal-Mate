@@ -9,3 +9,25 @@ main {
 body {
   font-family: "Inter";
 }
+
+.login-section::before,
+.login-section::after {
+  content: "";
+  background-image: url("/veg-plate.png");
+  background-size: cover;
+  position: absolute;
+  z-index: -1;
+}
+.login-section::before {
+  top: -165px;
+  right: -130px;
+  width: 500px;
+  height: 500px;
+}
+
+.login-section::after {
+  bottom: -150px;
+  left: -100px;
+  width: 500px;
+  height: 500px;
+}

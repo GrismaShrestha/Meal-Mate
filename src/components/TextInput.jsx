@@ -1,4 +1,4 @@
-export default function TextInput({ placeholder, id, label, type }) {
+export default function TextInput({ placeholder, id, label, type, autoFocus }) {
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={id} className="font-normal text-gray-400">
@@ -7,6 +7,7 @@ export default function TextInput({ placeholder, id, label, type }) {
       <input
         id={id}
         type={type}
+        autoFocus={autoFocus}
         className="rounded-md border border-gray-300 px-4 py-3 text-gray-500 placeholder-gray-300 outline-none transition-all focus:border-gray-600"
         placeholder={placeholder}
       />
