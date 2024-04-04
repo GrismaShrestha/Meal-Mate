@@ -1,11 +1,13 @@
 import express from "express";
-import { db } from "./db.js";
+import { authUserRouter } from "./routes/auth-user.js";
 
 const app = express();
 const port = 3000;
 
-const [results] = await db.query("SELECT * FROM test;");
-console.log(results);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(authUserRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

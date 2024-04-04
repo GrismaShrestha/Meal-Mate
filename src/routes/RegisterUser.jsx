@@ -6,12 +6,17 @@ export default function RegisterUser() {
   return (
     <div className="grid min-h-screen grid-cols-2">
       <div className="bg-[url('/get-started/main-veggies.png')] bg-cover bg-no-repeat" />
-      <div className="flex flex-col p-16 justify-center items-center">
+      <div className="flex flex-col items-center justify-center p-16">
         <p className="text-center text-4xl font-semibold">Sign up</p>
         <p className="mt-2 text-center text-2xl font-light text-gray-400">
           Create an account to access exclusive features
         </p>
-        <form className="mt-8 flex flex-col gap-4">
+        <form
+          className="mt-8 flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <TextInput
             label="Enter your full name"
             id="full-name"
@@ -50,7 +55,7 @@ export default function RegisterUser() {
               .
             </p>
             <Button className="mt-1 w-full text-xl">Sign up</Button>
-            <p className="text-center font-light text-gray-400 mt-1">
+            <p className="mt-1 text-center font-light text-gray-400">
               Already have an account?{" "}
               <Link to="/login/user" className="text-gray-700 hover:underline">
                 Login
