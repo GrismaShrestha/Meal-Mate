@@ -1,7 +1,9 @@
-export default function Spinner({ size }) {
+import { twMerge } from "tailwind-merge";
+
+export default function Spinner({ size, className }) {
   return (
     <svg
-      className="-ml-1 mr-3 animate-spin text-primary"
+      className={twMerge("-ml-1 mr-3 animate-spin text-primary", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

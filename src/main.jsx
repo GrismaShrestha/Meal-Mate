@@ -25,6 +25,7 @@ import AdminLayout from "./routes/admin/AdminLayout";
 import Dashboard from "./routes/admin/Dashboard";
 import Users from "./routes/admin/Users";
 import LoginAdmin from "./routes/admin/Login";
+import UserDetails from "./routes/admin/UserDetails";
 
 const queryClient = new QueryClient();
 
@@ -99,6 +100,10 @@ export function AuthCheck() {
         {
           path: "users",
           element: <Users />,
+        },
+        {
+          path: "users/:id",
+          element: <UserDetails />,
         },
       ],
     },

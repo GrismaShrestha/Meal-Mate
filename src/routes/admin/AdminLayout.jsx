@@ -12,7 +12,7 @@ export default function AdminLayout() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="sticky top-0 flex h-screen w-[250px] flex-col items-center gap-4 bg-[#3D4B64] px-5 py-8">
+      <div className="sticky top-0 flex h-screen min-w-[250px] max-w-[250px] flex-col items-center gap-4 bg-[#3D4B64] px-5 py-8">
         <img
           src="/site-logo.png"
           alt="Meal Mate"

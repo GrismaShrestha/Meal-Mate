@@ -8,6 +8,7 @@ export default function Button({
   error,
   color,
   children,
+  type,
   ...props
 }) {
   return (
@@ -20,6 +21,7 @@ export default function Button({
         className,
       )}
       disabled={disabled || loading}
+      type={type}
       {...props}
     >
       {loading && <Spinner />}
