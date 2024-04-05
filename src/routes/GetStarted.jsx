@@ -28,12 +28,6 @@ export default function GetStarted() {
             </div>
             <div className="absolute origin-top translate-x-8 translate-y-[1px] scale-y-0 text-gray-100 drop-shadow-2xl transition-all duration-[400ms] group-hover:scale-y-100">
               <Link
-                to="/register/admin"
-                className="block w-[190px] border-b border-b-white bg-primary px-4 py-3 hover:bg-primary-hover"
-              >
-                Admin
-              </Link>
-              <Link
                 to="/register/user"
                 className="block w-[190px] bg-primary px-4 py-3 hover:bg-primary-hover"
               >

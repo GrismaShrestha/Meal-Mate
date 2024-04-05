@@ -9,7 +9,7 @@ $axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   let token;
   if (config.url.startsWith("/admin")) {
-    token = JSON.parse(localStorage.getItem("admin-auth"));
+    token = JSON.parse(localStorage.getItem("auth-admin"));
   } else {
     token = JSON.parse(localStorage.getItem("auth"));
   }

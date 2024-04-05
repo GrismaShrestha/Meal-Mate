@@ -14,7 +14,7 @@ import "@fontsource/inter/900.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useUser } from "./hooks/auth";
+import { useAdmin, useUser } from "./hooks/auth";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import RootLayout from "./routes/RootLayout";
 import Homepage from "./routes/Homepage";
@@ -23,12 +23,28 @@ import RegisterUser from "./routes/RegisterUser";
 import LoginUser from "./routes/LoginUser";
 import AdminLayout from "./routes/admin/AdminLayout";
 import Dashboard from "./routes/admin/Dashboard";
+import Users from "./routes/admin/Users";
+import LoginAdmin from "./routes/admin/Login";
 
 const queryClient = new QueryClient();
 
 export function AuthCheck() {
-  const { isLoading, isRefetching, data } = useUser();
-  if (isLoading && !isRefetching) {
+  const {
+    isLoading: isLoadingUser,
+    isRefetching: isRefetchingUser,
+    data: user,
+  } = useUser();
+
+  const {
+    isLoading: isLoadingAdmin,
+    isRefetching: isRefetchingAdmin,
+    data: admin,
+  } = useAdmin();
+
+  if (
+    (isLoadingUser && !isRefetchingUser) ||
+    (isLoadingAdmin && !isRefetchingAdmin)
+  ) {
     return null;
   }
 
@@ -45,23 +61,44 @@ export function AuthCheck() {
     },
     {
       path: "/get-started",
-      element: data == null ? <GetStarted /> : <Navigate to="/" replace />,
+      element: <GetStarted />,
     },
+
+    // Register
     {
       path: "/register/user",
-      element: data == null ? <RegisterUser /> : <Navigate to="/" replace />,
+      element: user == null ? <RegisterUser /> : <Navigate to="/" replace />,
     },
+
+    // Login
     {
       path: "/login/user",
-      element: data == null ? <LoginUser /> : <Navigate to="/" replace />,
+      element: user == null ? <LoginUser /> : <Navigate to="/" replace />,
     },
     {
+      path: "/login/admin",
+      element:
+        admin == null ? <LoginAdmin /> : <Navigate to="/admin" replace />,
+    },
+
+    // Admin
+    // -----
+    {
       path: "/admin",
-      element: <AdminLayout />,
+      element:
+        admin != null ? (
+          <AdminLayout />
+        ) : (
+          <Navigate to="/login/admin" replace />
+        ),
       children: [
         {
-          path: "",
+          index: true,
           element: <Dashboard />,
+        },
+        {
+          path: "users",
+          element: <Users />,
         },
       ],
     },
