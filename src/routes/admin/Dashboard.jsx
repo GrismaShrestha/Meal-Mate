@@ -113,22 +113,18 @@ export default function Dashboard() {
           <MealEntry
             id={1}
             name="Peanut Butter Smoothie"
-            image="http://localhost:8001/assets/image/peanut_butter.jpg"
+            image="/temp/peanut_butter.jpg"
           />
-          <MealEntry
-            id={2}
-            name="Spring Roll"
-            image="http://localhost:8001/assets/image/spring_roll.jpeg"
-          />
+          <MealEntry id={2} name="Spring Roll" image="/temp/spring_roll.jpeg" />
           <MealEntry
             id={3}
             name="Quinoa Salad"
-            image="http://localhost:8001/assets/image/quenioa_salad.jpeg"
+            image="/temp/quenioa_salad.jpeg"
           />
           <MealEntry
             id={4}
             name="Asian Noodles"
-            image="http://localhost:8001/assets/image/asian_noodles.PNG"
+            image="/temp/asian_noodles.PNG"
           />
         </div>
       </StatCard>
