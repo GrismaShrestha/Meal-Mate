@@ -21,6 +21,8 @@ import Homepage from "./routes/Homepage";
 import GetStarted from "./routes/GetStarted";
 import RegisterUser from "./routes/RegisterUser";
 import LoginUser from "./routes/LoginUser";
+import AdminLayout from "./routes/admin/AdminLayout";
+import Dashboard from "./routes/admin/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,16 @@ export function AuthCheck() {
     {
       path: "/login/user",
       element: data == null ? <LoginUser /> : <Navigate to="/" replace />,
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "",
+          element: <Dashboard />,
+        },
+      ],
     },
   ]);
 
