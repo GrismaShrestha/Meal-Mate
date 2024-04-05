@@ -4,15 +4,27 @@ import { FaBookBookmark } from "react-icons/fa6";
 import { FaBlog } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 import { Chart } from "react-google-charts";
+import { useQuery } from "@tanstack/react-query";
+import $axios from "../../axios";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 export default function Dashboard() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["admin-dashboard"],
+    queryFn: () => $axios.get("/admin/dashboard").then((res) => res.data),
+  });
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
   return (
     <div className="flex flex-col gap-[40px]">
       <div className="flex items-start gap-[20px]">
         <div className="grid flex-grow grid-cols-2 gap-[20px]">
           <StatEntry
             title="Total users"
-            value={24}
+            value={data.metrics.totalUsers}
             icon={<FaUserAlt size={30} color="white" />}
             divStyle={{
               backgroundColor: "#875fc0",

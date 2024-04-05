@@ -1,12 +1,12 @@
 export default function Spinner({ size }) {
   return (
     <svg
-      className="-ml-1 mr-3 animate-spin text-white"
+      className="-ml-1 mr-3 animate-spin text-primary"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      height={size ?? 20}
-      width={size ?? 20}
+      height={size ?? 26}
+      width={size ?? 26}
     >
       <circle
         className="opacity-25"
