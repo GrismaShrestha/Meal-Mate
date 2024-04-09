@@ -5,6 +5,7 @@ export default function TextInput({
   type,
   autoFocus,
   defaultValue,
+  ...props
 }) {
   return (
     <div className="flex flex-col gap-1">
@@ -18,6 +19,7 @@ export default function TextInput({
         className="rounded-md border border-gray-300 px-4 py-3 text-gray-500 placeholder-gray-300 outline-none transition-all focus:border-gray-600"
         placeholder={placeholder}
         defaultValue={defaultValue}
+        {...props}
       />
     </div>
   );

@@ -18,7 +18,7 @@ export default function MealPlanForm() {
         </p>
 
         <div className="mt-4 flex flex-col gap-3">
-          <Select autoFocus id="gender" label="Gender">
+          <Select autoFocus id="gender" label="Gender" required>
             <option disabled value="" selected>
               Select your gender
             </option>
@@ -30,37 +30,60 @@ export default function MealPlanForm() {
             placeholder="Enter your age"
             label="Age"
             type="number"
+            min={1}
+            max={99}
+            required
           />
           <TextInput
             id="height"
             label="Height (in cm)"
             placeholder="Enter your height in cm"
             type="number"
+            min={121}
+            max={241}
+            required
           />
           <TextInput
             id="weight"
             label="Weight (in km)"
             placeholder="Enter your weight in km"
             type="number"
+            min={20}
+            max={400}
+            required
           />
           <Select
             id="activity-level"
             label="Activity Level (1 = Least active, 6 = Most active)"
+            required
           >
             <option disabled value="" selected>
               Select your activity level
             </option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
+            <option value="level_1">1</option>
+            <option value="level_2">2</option>
+            <option value="level_3">3</option>
+            <option value="level_4">4</option>
+            <option value="level_5">5</option>
+            <option value="level_6">6</option>
+          </Select>
+          <Select id="goal" label="Your goal" required>
+            <option disabled value="" selected>
+              Select your goal
+            </option>
+            <option value="maintain-weight">Maintain weight</option>
+            <option value="mild-weight-loss">Mild weight loss</option>
+            <option value="weight-loss">Weight loss</option>
+            <option value="extreme-weight-loss">Extreme weight loss</option>
+            <option value="mild-weight-gain">Mild weight gain</option>
+            <option value="weight-gain">Weight gain</option>
+            <option value="extreme-weight-gain">Extreme weigh gain</option>
           </Select>
         </div>
         <Button className="mt-6" color="purple">
           Submit
         </Button>
+        <p className="text-xs text-gray-500 mt-2">Note that the meal plan generation will take some time!</p>
       </form>
     </div>
   );
