@@ -2,15 +2,43 @@ import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useUser } from "../hooks/auth";
 
 export default function Homepage() {
   return (
     <main>
+      <UserDashboard />
       <DiscoverMeals />
       <Poll />
       <OurServices />
     </main>
   );
+}
+
+function UserDashboard() {
+  const { data: user } = useUser();
+  if (!user) {
+    return null;
+  }
+
+  const userMealPlan = null;
+
+  if (userMealPlan == null) {
+    return (
+      <div className="mb-8 text-center">
+        <p className="mb-1 text-3xl">
+          You have not generated your meal plan yet!
+        </p>
+        <p>
+          Tell us about yourself and your goal, layback and we will do the rest
+          of the heavy lifting for you!
+        </p>
+        <Link to="/user/meal-plan-form">
+          <Button className="mx-auto mt-3">Generate your own meal plan</Button>
+        </Link>
+      </div>
+    );
+  }
 }
 
 function DiscoverMeals() {

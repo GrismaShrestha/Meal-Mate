@@ -26,6 +26,7 @@ import Dashboard from "./routes/admin/Dashboard";
 import Users from "./routes/admin/Users";
 import LoginAdmin from "./routes/admin/Login";
 import UserDetails from "./routes/admin/UserDetails";
+import MealPlanForm from "./routes/user/MealPlanForm";
 
 const queryClient = new QueryClient();
 
@@ -104,6 +105,23 @@ export function AuthCheck() {
         {
           path: "users/:id",
           element: <UserDetails />,
+        },
+      ],
+    },
+
+    // User dashboard
+    // --------------
+    {
+      path: "/user",
+      element: user != null ? null : <Navigate to="/login/user" replace />,
+      children: [
+        {
+          index: true,
+          element: <p>TODO: User dashboard</p>,
+        },
+        {
+          path: "meal-plan-form",
+          element: <MealPlanForm />,
         },
       ],
     },
