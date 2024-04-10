@@ -3,11 +3,26 @@ import Button from "../components/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useUser } from "../hooks/auth";
+import { useQuery } from "@tanstack/react-query";
+import $axios from "../axios";
+import LoadingIndicator from "../components/LoadingIndicator";
+import dayjs from "dayjs";
+
+const weekDays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 export default function Homepage() {
   return (
     <main>
-      <UserDashboard />
+      <UserMealPlan />
+      <Remainder />
       <DiscoverMeals />
       <Poll />
       <OurServices />
@@ -15,15 +30,27 @@ export default function Homepage() {
   );
 }
 
-function UserDashboard() {
+function UserMealPlan() {
   const { data: user } = useUser();
+
+  const { data, isFetching } = useQuery({
+    queryKey: ["user-meal-plan", user.id],
+    queryFn: () =>
+      $axios
+        .get("/user/meal-plan")
+        .then((res) => res.data)
+        .catch(() => null),
+  });
+
   if (!user) {
     return null;
   }
 
-  const userMealPlan = null;
+  if (isFetching) {
+    return <LoadingIndicator hideLabel />;
+  }
 
-  if (userMealPlan == null) {
+  if (!data) {
     return (
       <div className="mb-8 text-center">
         <p className="mb-1 text-3xl">
@@ -39,6 +66,93 @@ function UserDashboard() {
       </div>
     );
   }
+
+  const todayEntry = data.plan.find((d) => d.day == dayjs().day() + 1);
+
+  return (
+    <div className="container mb-5">
+      <h1 className="text-4xl font-semibold uppercase text-primary-dark">
+        Your today{`'`}s meal plan
+      </h1>
+      <div className="p-2 pb-0">
+        <p className="text-gray-700">{weekDays[dayjs().day()]}</p>
+        <p className="text-gray-700">Total calories: {todayEntry.calories}</p>
+        <div className="mt-4 grid grid-cols-4 gap-8">
+          <MealPlanEntry details={todayEntry.meals["breakfast"]} />
+          <MealPlanEntry details={todayEntry.meals["snack"]} />
+          <MealPlanEntry details={todayEntry.meals["lunch"]} />
+          <MealPlanEntry details={todayEntry.meals["dinner"]} />
+        </div>
+      </div>
+      <Button className="ml-auto">View all week plan</Button>
+    </div>
+  );
+}
+
+function MealPlanEntry({ details }) {
+  return (
+    <div>
+      <p className="mb-1 text-xl font-medium capitalize">{details.type}</p>
+      <a href={`/meal/${details.id}`} className="hover:underline">
+        <img
+          src={details.main_image}
+          alt={details.name}
+          className="h-[140px] w-full object-cover"
+        />
+        <p className="mt-1 text-center text-sm">
+          {details.name} ({details.calories} cal)
+        </p>
+      </a>
+    </div>
+  );
+}
+
+function Remainder() {
+  const { data: user } = useUser();
+
+  const data = null;
+
+  if (!user) {
+    return null;
+  }
+
+  if (!data) {
+    return (
+      <div className="mb-16 mt-8 text-center">
+        <p className="mb-1 text-3xl">
+          You have not created your daily remainders yet!
+        </p>
+        <p>
+          Keep Your Health & Wellness Goals in Check with Personalized
+          Reminders! 🌟
+        </p>
+        <Link to="/user/meal-plan-form">
+          <Button className="mx-auto mt-3">Create daily remainders</Button>
+        </Link>
+      </div>
+    );
+  }
+
+  const todayEntry = data.plan.find((d) => d.day == dayjs().day() + 1);
+
+  return (
+    <div className="container mb-5">
+      <h1 className="text-4xl font-semibold uppercase text-primary-dark">
+        Your today{`'`}s meal plan
+      </h1>
+      <div className="p-2 pb-0">
+        <p className="text-gray-700">{weekDays[dayjs().day()]}</p>
+        <p className="text-gray-700">Total calories: {todayEntry.calories}</p>
+        <div className="mt-4 grid grid-cols-4 gap-8">
+          <MealPlanEntry details={todayEntry.meals["breakfast"]} />
+          <MealPlanEntry details={todayEntry.meals["snack"]} />
+          <MealPlanEntry details={todayEntry.meals["lunch"]} />
+          <MealPlanEntry details={todayEntry.meals["dinner"]} />
+        </div>
+      </div>
+      <Button className="ml-auto">View all week plan</Button>
+    </div>
+  );
 }
 
 function DiscoverMeals() {

@@ -230,6 +230,63 @@ userRouter.post(
   },
 );
 
+// Get the generated meal plan (if it exists)
+// ------------------------------------------
+
+userRouter.get(
+  "/user/meal-plan",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    // First check if the user has generated a meal plan
+    const doesUserAlreadyHaveAMealPlanGenerated = await db
+      .query("SELECT COUNT(*) AS count FROM user_meal_plan WHERE user_id = ?", [
+        req.loggedInUser.id,
+      ])
+      .then(([result]) => result[0].count > 0);
+    if (!doesUserAlreadyHaveAMealPlanGenerated) {
+      return res
+        .status(404)
+        .json({ message: "Current user has not generated a meal plan yet" });
+    }
+
+    // Get all the meals of the plan
+    const [meals] = await db.query(
+      `SELECT ump.day, ump.calories as total_calories, umpm.*
+       FROM user_meal_plan ump
+       INNER JOIN user_meal_plan_meal umpm ON ump.id = umpm.user_meal_plan_id
+       WHERE ump.user_id = ?`,
+      [req.loggedInUser.id],
+    );
+
+    const retData = [];
+    for (const meal of meals) {
+      let {
+        day,
+        total_calories,
+        user_meal_plan_id,
+        meal: mealType,
+        ...mealDetails
+      } = meal;
+      mealDetails["type"] = mealType;
+      const dayEntryIdx = retData.findIndex((d) => d.day == day);
+      if (dayEntryIdx == -1) {
+        retData.push({
+          id: user_meal_plan_id,
+          day: day,
+          calories: total_calories,
+          meals: { [mealType]: mealDetails },
+        });
+      } else {
+        retData[dayEntryIdx].meals[mealType] = mealDetails;
+      }
+    }
+
+    return res.json({ plan: retData });
+  },
+);
+
 // Utils
 // -----
 
