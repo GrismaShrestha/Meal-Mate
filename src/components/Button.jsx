@@ -14,11 +14,13 @@ export default function Button({
   return (
     <button
       className={twMerge(
-        "flex items-center justify-center rounded-md bg-primary px-8 py-2 text-gray-100 transition-colors hover:bg-primary-hover disabled:bg-primary-disabled",
+        "flex items-center justify-center rounded-md bg-primary px-8 py-2 text-gray-100 transition-colors hover:bg-primary-hover",
+        loading && color == undefined && "disabled:bg-primary-disabled",
         color == "white" &&
           "bg-white text-primary hover:bg-white hover:text-black",
         color == "purple" &&
           "bg-[#DCE6FE] text-gray-500 hover:bg-[#B5C1E6] hover:text-gray-100",
+        loading && color == undefined && "disabled:bg-[#EBF1FE]",
         !!error && "bg-red-400 hover:bg-red-300",
         className,
       )}
@@ -26,7 +28,14 @@ export default function Button({
       type={type}
       {...props}
     >
-      {loading && <Spinner />}
+      {loading && (
+        <Spinner
+          className={twMerge(
+            color == "white" && "text-gray-400",
+            color == "purple" && "text-white",
+          )}
+        />
+      )}
       {children}
     </button>
   );

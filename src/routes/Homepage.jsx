@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import $axios from "../axios";
 import LoadingIndicator from "../components/LoadingIndicator";
 import dayjs from "dayjs";
+import { QueryCache } from "@tanstack/react-query";
 
 const weekDays = [
   "Sunday",
@@ -30,10 +31,10 @@ export default function Homepage() {
   );
 }
 
-function UserMealPlan() {
+function useUserMealPlan() {
   const { data: user } = useUser();
 
-  const { data, isFetching } = useQuery({
+  return useQuery({
     queryKey: ["user-meal-plan", user?.id],
     queryFn: () =>
       $axios
@@ -41,6 +42,12 @@ function UserMealPlan() {
         .then((res) => res.data)
         .catch(() => null),
   });
+}
+
+function UserMealPlan() {
+  const { data: user } = useUser();
+
+  const { data, isFetching } = useUserMealPlan();
 
   if (!user) {
     return null;
@@ -111,6 +118,11 @@ function Remainder() {
   const { data: user } = useUser();
 
   const data = null;
+
+  const { data: userMealPlan } = useUserMealPlan();
+  if (!userMealPlan) {
+    return null;
+  }
 
   if (!user) {
     return null;

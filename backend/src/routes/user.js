@@ -70,7 +70,7 @@ userRouter.post(
           query: `mutation updateMealPlanSettings {
           updateMealPlanSettings(
             overwrite: {
-              calories: ${bmr},
+              calories: ${Math.floor(bmr)},
               carbs: ${goalDistr[0]},
               fat: ${goalDistr[1]},
               protein: ${goalDistr[2]},
