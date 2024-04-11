@@ -13,9 +13,8 @@ export default function MealPlanForm() {
     mutationKey: ["meal-plan-generation"],
     mutationFn: (values) => $axios.post("/user/meal-plan", values),
     onSuccess: () => {
-      // TODO: Change the redirect link to dashboard
       toast.success("Your meal plan has been generated!");
-      navigate("/", { replace: true });
+      navigate("/user", { replace: true });
     },
     onError: (error) => {
       toast.error(error.response.data.message);

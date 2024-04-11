@@ -28,6 +28,8 @@ import LoginAdmin from "./routes/admin/Login";
 import UserDetails from "./routes/admin/UserDetails";
 import MealPlanForm from "./routes/user/MealPlanForm";
 import MealDetails from "./routes/meal/MealDetails";
+import UserDashboard from "./routes/user/Dashboard";
+import UserDashboardLayout from "./routes/user/Layout";
 
 const queryClient = new QueryClient();
 
@@ -118,17 +120,22 @@ export function AuthCheck() {
     // --------------
     {
       path: "/user",
-      element: user != null ? null : <Navigate to="/login/user" replace />,
+      element:
+        user != null ? (
+          <UserDashboardLayout />
+        ) : (
+          <Navigate to="/login/user" replace />
+        ),
       children: [
         {
           index: true,
-          element: <p>TODO: User dashboard</p>,
-        },
-        {
-          path: "meal-plan-form",
-          element: <MealPlanForm />,
+          element: <UserDashboard />,
         },
       ],
+    },
+    {
+      path: "/user/meal-plan-form",
+      element: <MealPlanForm />,
     },
   ]);
 

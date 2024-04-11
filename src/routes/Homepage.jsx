@@ -7,7 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import $axios from "../axios";
 import LoadingIndicator from "../components/LoadingIndicator";
 import dayjs from "dayjs";
-import { QueryCache } from "@tanstack/react-query";
+import { SlCalender } from "react-icons/sl";
+import { FaUserClock } from "react-icons/fa6";
 
 const weekDays = [
   "Sunday",
@@ -91,7 +92,11 @@ function UserMealPlan() {
           <MealPlanEntry details={todayEntry.meals["dinner"]} />
         </div>
       </div>
-      <Button className="ml-auto mt-4">View all week plan</Button>
+      <Link className="ml-auto mt-4 block w-max" to="/user">
+        <Button>
+          <SlCalender className="mr-3 inline" /> View all week plan
+        </Button>
+      </Link>
     </div>
   );
 }
@@ -162,7 +167,11 @@ function Remainder() {
           <MealPlanEntry details={todayEntry.meals["dinner"]} />
         </div>
       </div>
-      <Button className="ml-auto">View all week plan</Button>
+      <Link className="ml-auto block w-max" to="/user/remainders">
+        <Button>
+          <FaUserClock className="mr-3 inline" /> View all remainders
+        </Button>
+      </Link>
     </div>
   );
 }
