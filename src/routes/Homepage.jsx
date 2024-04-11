@@ -3,12 +3,14 @@ import Button from "../components/Button";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useUser } from "../hooks/auth";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import $axios from "../axios";
 import LoadingIndicator from "../components/LoadingIndicator";
 import dayjs from "dayjs";
 import { SlCalender } from "react-icons/sl";
 import { FaUserClock } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import TextInput from "../components/TextInput";
 
 const weekDays = [
   "Sunday",
@@ -50,12 +52,25 @@ function UserMealPlan() {
 
   const { data, isFetching } = useUserMealPlan();
 
+  const { data: isVerifiedData, isFetching: isVerifiedIsFetching } = useQuery({
+    queryKey: ["user-is-verified", user?.id],
+    queryFn: () =>
+      $axios
+        .get("/user/is-verified")
+        .then((res) => res.data)
+        .catch(() => null),
+  });
+
   if (!user) {
     return null;
   }
 
-  if (isFetching) {
+  if (isFetching || isVerifiedIsFetching) {
     return <LoadingIndicator hideLabel />;
+  }
+
+  if (!isVerifiedData.is_verified) {
+    return <PhoneVerification phone={user.phone} />;
   }
 
   if (!data) {
@@ -97,6 +112,75 @@ function UserMealPlan() {
           <SlCalender className="mr-3 inline" /> View all week plan
         </Button>
       </Link>
+    </div>
+  );
+}
+
+function PhoneVerification({ phone }) {
+  const queryClient = useQueryClient();
+
+  const {
+    mutate: sendOTP,
+    isPending: isSendingOTP,
+    isSuccess: hasSentOTP,
+  } = useMutation({
+    mutationKey: ["send-otp", phone],
+    mutationFn: () => $axios.post("/user/send-otp"),
+    onError: (error) => {
+      toast.error(error.response.data.message || "Something went wrong!");
+    },
+  });
+  const { mutate: verifyOTP, isPending: isVerifyingOTP } = useMutation({
+    mutationKey: ["verify-otp", phone],
+    mutationFn: (values) => $axios.post("/user/verify-account", values),
+    onError: (error) => {
+      toast.error(error.response.data.message || "Something went wrong!");
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["user-is-verified"],
+      });
+      queryClient.refetchQueries({
+        queryKey: ["user-meal-plan"],
+      });
+      toast.success("Your account has been verified!");
+    },
+  });
+
+  return (
+    <div className="mb-8 text-center">
+      <p className="mb-1 text-3xl">You are not verified yet!</p>
+      <p>
+        Your mobile number should be verified before you can generate your meal
+        plan and set remainders
+      </p>
+      {!hasSentOTP ? (
+        <Button
+          className="mx-auto mt-3"
+          onClick={() => sendOTP()}
+          loading={isSendingOTP}
+        >
+          Send a verification code to {phone}
+        </Button>
+      ) : (
+        <form
+          className="mt-4 flex flex-col items-center justify-center gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const otp = e.target.elements.otp.value;
+            verifyOTP({ otp });
+          }}
+        >
+          <TextInput
+            id="otp"
+            label="Enter the OTP you received"
+            autoFocus
+            className="w-[110px] text-center"
+            rootClassName="justify-center items-center"
+          />
+          <Button loading={isVerifyingOTP}>Verify</Button>
+        </form>
+      )}
     </div>
   );
 }

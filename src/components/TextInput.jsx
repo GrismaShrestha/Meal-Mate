@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 export default function TextInput({
   placeholder,
   id,
@@ -5,10 +7,12 @@ export default function TextInput({
   type,
   autoFocus,
   defaultValue,
+  className,
+  rootClassName,
   ...props
 }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className={twMerge("flex flex-col gap-1", rootClassName)}>
       <label htmlFor={id} className="font-normal text-gray-400">
         {label}
       </label>
@@ -16,7 +20,10 @@ export default function TextInput({
         id={id}
         type={type}
         autoFocus={autoFocus}
-        className="rounded-md border border-gray-300 px-4 py-3 text-gray-500 placeholder-gray-300 outline-none transition-all focus:border-gray-600"
+        className={twMerge(
+          "rounded-md border border-gray-300 px-4 py-3 text-gray-500 placeholder-gray-300 outline-none transition-all focus:border-gray-600",
+          className,
+        )}
         placeholder={placeholder}
         defaultValue={defaultValue}
         {...props}

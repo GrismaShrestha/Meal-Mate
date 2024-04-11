@@ -1,8 +1,11 @@
 import express from "express";
 import { db } from "../db.js";
 import { isUser } from "../guards/auth.js";
+import otpGenerator from "otp-generator";
 
 export const userRouter = express.Router();
+
+const OTPs = {};
 
 // Generate a meal plan
 // --------------------
@@ -239,7 +242,17 @@ userRouter.get(
   isUser,
   // The actual process
   async (req, res) => {
-    // First check if the user has generated a meal plan
+    // First check if the user is verified
+    const isUserVerified = await db
+      .query("SELECT is_verified FROM user WHERE id = ?", [req.loggedInUser.id])
+      .then(([result]) => result[0].is_verified);
+    if (!isUserVerified) {
+      return res
+        .status(400)
+        .json({ message: "Current user is not verified yet" });
+    }
+
+    // Check if the user has generated a meal plan
     const doesUserAlreadyHaveAMealPlanGenerated = await db
       .query("SELECT COUNT(*) AS count FROM user_meal_plan WHERE user_id = ?", [
         req.loggedInUser.id,
@@ -284,6 +297,93 @@ userRouter.get(
     }
 
     return res.json({ plan: retData });
+  },
+);
+
+// Is the user verified yet?
+// -------------------------
+userRouter.get(
+  "/user/is-verified",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    // Check if the user is verified
+    const isUserVerified = await db
+      .query("SELECT is_verified FROM user WHERE id = ?", [req.loggedInUser.id])
+      .then(([result]) => result[0].is_verified);
+    return res.status(200).json({ is_verified: isUserVerified });
+  },
+);
+
+// Send verification OTP
+// ---------------------
+userRouter.post(
+  "/user/send-otp",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    // Check if the user is verified
+    const isUserVerified = await db
+      .query("SELECT is_verified FROM user WHERE id = ?", [req.loggedInUser.id])
+      .then(([result]) => result[0].is_verified);
+    if (isUserVerified) {
+      return res.status(400).json({ message: "User is already verified!" });
+    }
+    const otp = otpGenerator.generate(6, {
+      digits: true,
+      specialChars: false,
+      lowerCaseAlphabets: false,
+      upperCaseAlphabets: false,
+    });
+    OTPs[req.loggedInUser.id] = otp;
+
+    const userPhone = await db
+      .query("SELECT phone FROM user WHERE id = ?", [req.loggedInUser.id])
+      .then(([result]) => result[0].phone);
+
+    await fetch("https://api.sparrowsms.com/v2/sms/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: "v2_JVEAq00nf1rJrOQNkySw0crF2Bw.adQJ",
+        from: "TheAlert",
+        to: userPhone,
+        text: "Your verification OTP is: " + otp,
+      }),
+    });
+
+    return res.status(200).json({ message: "OTP sent" });
+  },
+);
+
+// Check if OTP is correct and verify the account
+// ----------------------------------------------
+userRouter.post(
+  "/user/verify-account",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    // Check if the user is verified
+    const isUserVerified = await db
+      .query("SELECT is_verified FROM user WHERE id = ?", [req.loggedInUser.id])
+      .then(([result]) => result[0].is_verified);
+    if (isUserVerified) {
+      return res.status(400).json({ message: "User is already verified!" });
+    }
+
+    if (OTPs[req.loggedInUser.id] == req.body.otp) {
+      await db.query("UPDATE user SET is_verified = 1 WHERE id = ?", [
+        req.loggedInUser.id,
+      ]);
+      return res.status(200).json({ message: "Account has been verified!" });
+    } else {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
   },
 );
 
