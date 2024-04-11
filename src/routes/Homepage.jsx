@@ -34,7 +34,7 @@ function UserMealPlan() {
   const { data: user } = useUser();
 
   const { data, isFetching } = useQuery({
-    queryKey: ["user-meal-plan", user.id],
+    queryKey: ["user-meal-plan", user?.id],
     queryFn: () =>
       $axios
         .get("/user/meal-plan")
@@ -84,7 +84,7 @@ function UserMealPlan() {
           <MealPlanEntry details={todayEntry.meals["dinner"]} />
         </div>
       </div>
-      <Button className="ml-auto">View all week plan</Button>
+      <Button className="ml-auto mt-4">View all week plan</Button>
     </div>
   );
 }

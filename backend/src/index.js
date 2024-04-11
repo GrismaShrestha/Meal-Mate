@@ -4,6 +4,7 @@ import { authUserRouter } from "./routes/auth-user.js";
 import { authAdminRouter } from "./routes/auth-admin.js";
 import { adminRouter } from "./routes/admin.js";
 import { userRouter } from "./routes/user.js";
+import { mealRouter } from "./routes/meal.js";
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ app.use(authUserRouter);
 app.use(authAdminRouter);
 app.use(adminRouter);
 app.use(userRouter);
+app.use(mealRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

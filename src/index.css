@@ -10,6 +10,12 @@ body {
   font-family: "Inter";
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .login-section::before,
 .login-section::after {
   content: "";

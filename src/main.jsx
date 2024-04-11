@@ -27,6 +27,7 @@ import Users from "./routes/admin/Users";
 import LoginAdmin from "./routes/admin/Login";
 import UserDetails from "./routes/admin/UserDetails";
 import MealPlanForm from "./routes/user/MealPlanForm";
+import MealDetails from "./routes/meal/MealDetails";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,10 @@ export function AuthCheck() {
         {
           path: "",
           element: <Homepage />,
+        },
+        {
+          path: "/meal/:mealId",
+          element: <MealDetails />,
         },
       ],
     },
