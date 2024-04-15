@@ -7,6 +7,7 @@ import $axios from "../../axios";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import { useState } from "react";
 import { Chart } from "react-google-charts";
+import { Navigate } from "react-router-dom";
 
 const weekDays = [
   "Sunday",
@@ -44,6 +45,10 @@ export default function UserDashboard() {
   const fatPercentage = Math.floor(
     (totalFat / (totalProtein + totalCarbs + totalFat)) * 100,
   );
+
+  if (!isFetching && !data) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div>

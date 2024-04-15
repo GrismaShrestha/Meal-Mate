@@ -18,6 +18,10 @@ app.use(authAdminRouter);
 app.use(adminRouter);
 app.use(userRouter);
 app.use(mealRouter);
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).json({ message: "Something went wrong! Please try again" });
+});
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

@@ -116,7 +116,7 @@ export default function MealPlanForm() {
             <option value="extreme-weight-loss">Extreme weight loss</option>
             <option value="mild-weight-gain">Mild weight gain</option>
             <option value="weight-gain">Weight gain</option>
-            <option value="extreme-weight-gain">Extreme weigh gain</option>
+            <option value="extreme-weight-gain">Extreme weight gain</option>
           </Select>
         </div>
         <Button className="mt-6" color="purple" loading={isPending}>
