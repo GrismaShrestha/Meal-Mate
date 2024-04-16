@@ -3,8 +3,11 @@ import { db } from "../db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { isUser } from "../guards/auth.js";
+import otpGenerator from "otp-generator";
 
 export const authUserRouter = express.Router();
+
+const OTPs = {};
 
 // Register a user
 // ---------------
@@ -82,4 +85,76 @@ authUserRouter.post("/user/login", async (req, res) => {
 
 authUserRouter.get("/user/details", isUser, async (req, res) => {
   return res.status(200).json(req.loggedInUser);
+});
+
+// Forgot password request
+// -----------------------
+
+authUserRouter.post("/user/forgot-password/send-otp", async (req, res) => {
+  const phone = req.body.phone;
+
+  // First check if the phone number is registered
+  const isRegistered = await db
+    .query("SELECT COUNT(*) AS count FROM user WHERE phone = ?", [phone])
+    .then(([result]) => result[0].count > 0);
+  if (!isRegistered) {
+    return res.status(404).json({ message: "Phone number is not registered" });
+  }
+
+  const otp = otpGenerator.generate(6, {
+    digits: true,
+    specialChars: false,
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+  });
+  OTPs[phone] = otp;
+
+  await fetch("https://api.sparrowsms.com/v2/sms/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: "v2_JVEAq00nf1rJrOQNkySw0crF2Bw.adQJ",
+      from: "TheAlert",
+      to: phone,
+      text: "Your verification OTP is: " + otp,
+    }),
+  });
+
+  return res.status(200).json({ message: "OTP sent" });
+});
+
+// Verify forgot password OTP
+// --------------------------
+
+authUserRouter.post("/user/forgot-password/verify", async (req, res) => {
+  if (OTPs[req.body.phone] == req.body.otp) {
+    return res.status(200).json({ message: "OTP is correct!" });
+  } else {
+    return res.status(400).json({ message: "Invalid OTP" });
+  }
+});
+
+// Verify forgot password set new password
+// ---------------------------------------
+
+authUserRouter.post("/user/forgot-password/set", async (req, res) => {
+  if (OTPs[req.body.phone] == req.body.otp) {
+    // Create hash of the new password
+    const passwordHashed = await bcrypt.hash(req.body.password, 10);
+
+    try {
+      await db.query("UPDATE user SET password_hashed = ? WHERE phone = ?", [
+        passwordHashed,
+        req.body.phone,
+      ]);
+      return res.status(201).json({ success: true });
+    } catch (error) {
+      console.log("[ERROR]", error);
+      return res.status(400).json({ message: "Something went wrong" });
+    }
+  } else {
+    return res.status(400).json({ message: "Invalid OTP" });
+  }
 });

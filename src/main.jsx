@@ -30,6 +30,7 @@ import MealPlanForm from "./routes/user/MealPlanForm";
 import MealDetails from "./routes/meal/MealDetails";
 import UserDashboard from "./routes/user/Dashboard";
 import UserDashboardLayout from "./routes/user/Layout";
+import ForgotPasswordPage from "./routes/ForgotPassword";
 
 const queryClient = new QueryClient();
 
@@ -88,6 +89,11 @@ export function AuthCheck() {
       path: "/login/admin",
       element:
         admin == null ? <LoginAdmin /> : <Navigate to="/admin" replace />,
+    },
+    // Forgot password
+    {
+      path: "/forgot-password",
+      element: user == null ? <ForgotPasswordPage /> : <Navigate to="/" replace />,
     },
 
     // Admin
