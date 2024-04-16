@@ -17,7 +17,7 @@ export default function Button({
         "flex items-center justify-center rounded-md bg-primary px-8 py-2 text-gray-100 transition-colors hover:bg-primary-hover",
         loading && color == undefined && "disabled:bg-primary-disabled",
         color == "white" &&
-          "bg-white text-primary hover:bg-white hover:text-black",
+          "bg-white text-primary hover:bg-gray-100",
         color == "purple" &&
           "bg-[#DCE6FE] text-gray-500 hover:bg-[#B5C1E6] hover:text-gray-100",
         loading && color == undefined && "disabled:bg-[#EBF1FE]",

@@ -2,12 +2,21 @@ import $axios from "../../axios";
 import Button from "../../components/Button";
 import Select from "../../components/Select";
 import TextInput from "../../components/TextInput";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../hooks/auth";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 export default function MealPlanForm() {
   const navigate = useNavigate();
+
+  const { data: user } = useUser();
+  const { data, isLoading } = useQuery({
+    queryKey: ["user-settings", user?.id],
+    queryFn: () =>
+      $axios.get("/user/meal-gen-settings").then((res) => res.data),
+  });
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["meal-plan-generation"],
@@ -20,6 +29,14 @@ export default function MealPlanForm() {
       toast.error(error.response.data.message);
     },
   });
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingIndicator />
+      </div>
+    );
+  }
 
   return (
     <div className="min-w-screen flex min-h-screen items-center justify-center bg-[#DCE6FE]">
@@ -57,7 +74,13 @@ export default function MealPlanForm() {
         </p>
 
         <div className="mt-4 flex flex-col gap-3">
-          <Select autoFocus id="gender" label="Gender" required>
+          <Select
+            autoFocus
+            id="gender"
+            label="Gender"
+            required
+            defaultValue={data.gender}
+          >
             <option disabled value="" selected>
               Select your gender
             </option>
@@ -72,6 +95,7 @@ export default function MealPlanForm() {
             min={1}
             max={99}
             required
+            defaultValue={data.age || undefined}
           />
           <TextInput
             id="height"
@@ -81,6 +105,7 @@ export default function MealPlanForm() {
             min={121}
             max={241}
             required
+            defaultValue={data.height || undefined}
           />
           <TextInput
             id="weight"
@@ -90,11 +115,13 @@ export default function MealPlanForm() {
             min={20}
             max={400}
             required
+            defaultValue={data.weight || undefined}
           />
           <Select
             id="activity-level"
             label="Activity Level (1 = Least active, 6 = Most active)"
             required
+            defaultValue={data.activity_level}
           >
             <option disabled value="" selected>
               Select your activity level
@@ -106,7 +133,7 @@ export default function MealPlanForm() {
             <option value="level_5">5</option>
             <option value="level_6">6</option>
           </Select>
-          <Select id="goal" label="Your goal" required>
+          <Select id="goal" label="Your goal" required defaultValue={data.goal}>
             <option disabled value="" selected>
               Select your goal
             </option>

@@ -18,16 +18,15 @@ userRouter.post(
   async (req, res) => {
     try {
       // First check if the user already has a meal plan generated
-      const doesUserAlreadyHaveAMealPlanGenerated = await db
-        .query(
-          "SELECT COUNT(*) AS count FROM user_meal_plan WHERE user_id = ?",
-          [req.loggedInUser.id],
-        )
-        .then(([result]) => result[0].count > 0);
-      if (doesUserAlreadyHaveAMealPlanGenerated) {
-        return res
-          .status(409)
-          .json({ message: "Current user has already generated a meal plan" });
+      const [userMeals] = await db.query(
+        "SELECT id FROM user_meal_plan WHERE user_id = ?",
+        [req.loggedInUser.id],
+      );
+      // If already created, delete them
+      if (userMeals.length > 0) {
+        await db.query("DELETE FROM user_meal_plan WHERE id IN (?)", [
+          userMeals.reduce((acc, cur) => [...acc, cur.id], []),
+        ]);
       }
 
       // Generation inputs
@@ -36,9 +35,10 @@ userRouter.post(
       const height = req.body.height;
       const weight = req.body.weight;
       const activitylevel = req.body["activity-level"];
+      const goal = req.body.goal;
 
       // Get carbs-fats-proteins distributions for goal
-      const goalDistr = getDistributionsForGoal(req.body.goal);
+      const goalDistr = getDistributionsForGoal(goal);
 
       // Fetch the BMR from API
       const bmr = await fetch(
@@ -236,6 +236,12 @@ userRouter.post(
         return res.status(500).json({ message: "Something went wrong!" });
       }
 
+      // Save the meal gen settings
+      await db.query(
+        "UPDATE user SET age = ?, gender = ?, height = ?, weight = ?, activity_level = ?, goal = ?",
+        [age, gender, height, weight, activitylevel, goal],
+      );
+
       return res.status(201).json({ success: true });
     } catch (error) {
       console.log("[ERROR]", error);
@@ -243,6 +249,25 @@ userRouter.post(
         message: "Could not generate the meal plan! Please try again.",
       });
     }
+  },
+);
+
+// Get the user meal generation settings
+// -------------------------------------
+
+userRouter.get(
+  "/user/meal-gen-settings",
+  // Allow only logged in users
+  isUser,
+  // The actual generation process
+  async (req, res) => {
+    // Get the meal settings
+    const [result] = await db.query(
+      "SELECT gender, age, height, weight, activity_level, goal FROM user WHERE id = ?",
+      [req.loggedInUser.id],
+    );
+
+    return res.json(result[0]);
   },
 );
 
