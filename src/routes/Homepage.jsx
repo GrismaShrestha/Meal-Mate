@@ -227,7 +227,7 @@ function Reminders() {
           Keep Your Health & Wellness Goals in Check with Personalized
           Reminders! 🌟
         </p>
-        <Link to="/user/meal-plan-form">
+        <Link to="/user/reminders">
           <Button className="mx-auto mt-3">Create daily reminders</Button>
         </Link>
       </div>

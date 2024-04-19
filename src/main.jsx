@@ -11,6 +11,7 @@ import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/inter/800.css";
 import "@fontsource/inter/900.css";
+import "rc-time-picker/assets/index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +33,7 @@ import UserDashboard from "./routes/user/Dashboard";
 import UserDashboardLayout from "./routes/user/Layout";
 import ForgotPasswordPage from "./routes/ForgotPassword";
 import UserProfilePage from "./routes/user/Profile";
+import Reminders from "./routes/user/Reminders";
 
 const queryClient = new QueryClient();
 
@@ -138,6 +140,10 @@ export function AuthCheck() {
         {
           index: true,
           element: <UserDashboard />,
+        },
+        {
+          path: "reminders",
+          element: <Reminders />,
         },
         {
           path: "profile",

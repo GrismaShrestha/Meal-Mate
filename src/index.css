@@ -50,3 +50,9 @@ body {
   top: 0px;
   z-index: 999;
 }
+
+/* Time picker style */
+
+.rc-time-picker-input {
+  font-size: 14px !important;
+}
