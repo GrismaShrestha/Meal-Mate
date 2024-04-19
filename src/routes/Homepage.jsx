@@ -26,7 +26,7 @@ export default function Homepage() {
   return (
     <main>
       <UserMealPlan />
-      <Remainder />
+      <Reminders />
       <DiscoverMeals />
       <Poll />
       <OurServices />
@@ -152,7 +152,7 @@ function PhoneVerification({ phone }) {
       <p className="mb-1 text-3xl">You are not verified yet!</p>
       <p>
         Your mobile number should be verified before you can generate your meal
-        plan and set remainders
+        plan and set reminders
       </p>
       {!hasSentOTP ? (
         <Button
@@ -203,7 +203,7 @@ function MealPlanEntry({ details }) {
   );
 }
 
-function Remainder() {
+function Reminders() {
   const { data: user } = useUser();
 
   const data = null;
@@ -221,14 +221,14 @@ function Remainder() {
     return (
       <div className="mb-16 mt-8 text-center">
         <p className="mb-1 text-3xl">
-          You have not created your daily remainders yet!
+          You have not created your daily reminders yet!
         </p>
         <p>
           Keep Your Health & Wellness Goals in Check with Personalized
           Reminders! 🌟
         </p>
         <Link to="/user/meal-plan-form">
-          <Button className="mx-auto mt-3">Create daily remainders</Button>
+          <Button className="mx-auto mt-3">Create daily reminders</Button>
         </Link>
       </div>
     );
@@ -251,9 +251,9 @@ function Remainder() {
           <MealPlanEntry details={todayEntry.meals["dinner"]} />
         </div>
       </div>
-      <Link className="ml-auto block w-max" to="/user/remainders">
+      <Link className="ml-auto block w-max" to="/user/reminders">
         <Button>
-          <FaUserClock className="mr-3 inline" /> View all remainders
+          <FaUserClock className="mr-3 inline" /> View all reminders
         </Button>
       </Link>
     </div>

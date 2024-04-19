@@ -32,16 +32,16 @@ export default function UserDashboardLayout() {
               Meal Plan
             </button>
           </Link>
-          <Link to="/user/remainders">
+          <Link to="/user/reminders">
             <button
               className={twMerge(
                 "w-full rounded-xl py-2 text-[1.1rem] font-bold text-gray-400",
-                location.pathname == "/user/remainders" &&
+                location.pathname == "/user/reminders" &&
                   "bg-[#252627] text-white",
               )}
             >
               <FaUserClock className="mr-4 inline" size={30} />
-              Remainders
+              Reminders
             </button>
           </Link>
           <Link to="/user/profile">
