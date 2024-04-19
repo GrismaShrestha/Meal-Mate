@@ -31,6 +31,7 @@ import MealDetails from "./routes/meal/MealDetails";
 import UserDashboard from "./routes/user/Dashboard";
 import UserDashboardLayout from "./routes/user/Layout";
 import ForgotPasswordPage from "./routes/ForgotPassword";
+import UserProfilePage from "./routes/user/Profile";
 
 const queryClient = new QueryClient();
 
@@ -93,7 +94,8 @@ export function AuthCheck() {
     // Forgot password
     {
       path: "/forgot-password",
-      element: user == null ? <ForgotPasswordPage /> : <Navigate to="/" replace />,
+      element:
+        user == null ? <ForgotPasswordPage /> : <Navigate to="/" replace />,
     },
 
     // Admin
@@ -136,6 +138,10 @@ export function AuthCheck() {
         {
           index: true,
           element: <UserDashboard />,
+        },
+        {
+          path: "profile",
+          element: <UserProfilePage />,
         },
       ],
     },

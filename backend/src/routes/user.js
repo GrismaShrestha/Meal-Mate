@@ -425,6 +425,39 @@ userRouter.post(
   },
 );
 
+// Update user profile
+// -------------------
+userRouter.patch(
+  "/user/profile",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    const name = req.body.name;
+    const email = req.body.email;
+
+    try {
+      if (name) {
+        await db.query("UPDATE user SET name = ? WHERE id = ?", [
+          name,
+          req.loggedInUser.id,
+        ]);
+      }
+      if (email) {
+        await db.query("UPDATE user SET email = ? WHERE id = ?", [
+          email,
+          req.loggedInUser.id,
+        ]);
+      }
+    } catch (error) {
+      console.log("[ERROR]", error);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+
+    return res.status(200).json({ message: "Profile updated successfully!" });
+  },
+);
+
 // Utils
 // -----
 

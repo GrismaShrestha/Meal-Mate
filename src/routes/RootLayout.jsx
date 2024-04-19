@@ -133,7 +133,12 @@ function Auth() {
     <div className="flex items-center gap-4">
       {user ? (
         <>
-          <p>Hi! {user.name}</p>
+          <div>
+            <p>Hi! {user.name}</p>
+            <Link to="/user/profile">
+              <p className="text-sm hover:underline">Your profile</p>
+            </Link>
+          </div>
           <Button
             onClick={() => {
               removeToken();
@@ -173,7 +178,7 @@ function Footer() {
                 <Link
                   to={l.href}
                   key={l.name}
-                  className="hover:text-primary-very-light group flex items-center transition-all duration-300"
+                  className="group flex items-center transition-all duration-300 hover:text-primary-very-light"
                 >
                   <RxCaretRight
                     size={22}
