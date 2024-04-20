@@ -109,8 +109,8 @@ export default function MealPlanForm() {
           />
           <TextInput
             id="weight"
-            label="Weight (in km)"
-            placeholder="Enter your weight in km"
+            label="Weight (in kg)"
+            placeholder="Enter your weight in kg"
             type="number"
             min={20}
             max={400}

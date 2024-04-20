@@ -85,7 +85,7 @@ export default function Reminders() {
         <div className="my-3 flex gap-4">
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_01, "hh:mm a")}
+            defaultValue={data?.reminders?.water_01 && moment(data?.reminders?.water_01, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -94,7 +94,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_02, "hh:mm a")}
+            defaultValue={data?.reminders?.water_02 && moment(data?.reminders?.water_02, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -103,7 +103,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_03, "hh:mm a")}
+            defaultValue={data?.reminders?.water_03 && moment(data?.reminders?.water_03, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -112,7 +112,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_04, "hh:mm a")}
+            defaultValue={data?.reminders?.water_04 && moment(data?.reminders?.water_04, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -121,7 +121,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_05, "hh:mm a")}
+            defaultValue={data?.reminders?.water_05 && moment(data?.reminders?.water_05, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -130,7 +130,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_06, "hh:mm a")}
+            defaultValue={data?.reminders?.water_06 && moment(data?.reminders?.water_06, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -139,7 +139,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment(data.reminders.water_07, "hh:mm a")}
+            defaultValue={data?.reminders?.water_07 && moment(data?.reminders?.water_07, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -171,8 +171,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_sun &&
-                    moment(data.reminders.workout_sun, "hh:mm a")
+                    data?.reminders?.workout_sun &&
+                    moment(data?.reminders?.workout_sun, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -185,8 +185,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_mon &&
-                    moment(data.reminders.workout_mon, "hh:mm a")
+                    data?.reminders?.workout_mon &&
+                    moment(data?.reminders?.workout_mon, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -199,8 +199,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_tue &&
-                    moment(data.reminders.workout_tue, "hh:mm a")
+                    data?.reminders?.workout_tue &&
+                    moment(data?.reminders?.workout_tue, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -213,8 +213,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_wed &&
-                    moment(data.reminders.workout_wed, "hh:mm a")
+                    data?.reminders?.workout_wed &&
+                    moment(data?.reminders?.workout_wed, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -227,8 +227,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_thru &&
-                    moment(data.reminders.workout_thru, "hh:mm a")
+                    data?.reminders?.workout_thru &&
+                    moment(data?.reminders?.workout_thru, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -241,8 +241,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_fri &&
-                    moment(data.reminders.workout_fri, "hh:mm a")
+                    data?.reminders?.workout_fri &&
+                    moment(data?.reminders?.workout_fri, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -255,8 +255,8 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data.reminders.workout_sat &&
-                    moment(data.reminders.workout_sat, "hh:mm a")
+                    data?.reminders?.workout_sat &&
+                    moment(data?.reminders?.workout_sat, "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"

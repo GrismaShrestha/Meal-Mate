@@ -104,7 +104,7 @@ export default function Dashboard() {
           }}
         />
       </StatCard>
-      <StatCard title={"Lastest 4 meals generated"}>
+      <StatCard title={"Last 4 meals generated"}>
         <div
           style={{ display: "flex", gap: 20, justifyContent: "space-between" }}
         >

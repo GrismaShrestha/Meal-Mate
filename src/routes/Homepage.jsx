@@ -297,11 +297,11 @@ function Reminders() {
                 src="/vector-graphics/water-glass.avif"
                 className="h-[240px] w-auto object-contain"
               />
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-2">
                 {pendingReminders.water.map((w) => (
                   <p
                     key={w}
-                    className="text-center text-2xl font-bold text-primary"
+                    className="text-center text-5xl font-bold text-primary"
                   >
                     {w}
                   </p>
@@ -319,7 +319,7 @@ function Reminders() {
                 src="/vector-graphics/workout.avif"
                 className="h-[240px] w-auto object-contain"
               />
-              <p className="text-center text-6xl font-bold text-primary">
+              <p className="text-center text-5xl font-bold text-primary">
                 {pendingReminders.workout}
               </p>
             </div>
