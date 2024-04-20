@@ -12,19 +12,16 @@ const headerLinks = [
   },
   {
     title: "Planner",
-    href: "/planner",
+    href: "/user",
   },
-  {
-    title: "Recipes",
-    href: "/recipes",
-  },
+  // TODO: Add recipes (searching meal)
+  // {
+  //   title: "Recipes",
+  //   href: "/recipes",
+  // },
   {
     title: "Reminders",
-    href: "/reminders",
-  },
-  {
-    title: "Settings",
-    href: "/settings",
+    href: "/user/reminders",
   },
 ];
 
