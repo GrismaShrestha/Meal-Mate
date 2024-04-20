@@ -458,6 +458,98 @@ userRouter.patch(
   },
 );
 
+// Get reminders of a user
+// -----------------------
+userRouter.get(
+  "/user/reminders",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    // Check if the user has reminders
+    const doesUserHaveReminders = await db
+      .query("SELECT COUNT(*) AS count FROM reminder WHERE user_id = ?", [
+        req.loggedInUser.id,
+      ])
+      .then(([result]) => result[0].count > 0);
+    if (!doesUserHaveReminders) {
+      return res
+        .status(404)
+        .json({ message: "Current user has no reminders yet" });
+    }
+
+    // Get all reminders of the user
+    const [reminders] = await db.query(
+      `SELECT *
+       FROM reminder r
+       WHERE r.user_id = ?`,
+      [req.loggedInUser.id],
+    );
+
+    return res.json({ reminders: reminders[0] });
+  },
+);
+
+// Save reminders of a user
+// ------------------------
+userRouter.post(
+  "/user/reminders",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    // Delete previous reminders of the user (if it exists)
+    await db.query("DELETE FROM reminder WHERE user_id = ?", [
+      req.loggedInUser.id,
+    ]);
+
+    // Inputs
+    const water_01 = req.body.water_01;
+    const water_02 = req.body.water_02;
+    const water_03 = req.body.water_03;
+    const water_04 = req.body.water_04;
+    const water_05 = req.body.water_05;
+    const water_06 = req.body.water_06;
+    const water_07 = req.body.water_07;
+    const workout_sun = req.body.workout_sun;
+    const workout_mon = req.body.workout_mon;
+    const workout_tue = req.body.workout_tue;
+    const workout_wed = req.body.workout_wed;
+    const workout_thru = req.body.workout_thru;
+    const workout_fri = req.body.workout_fri;
+    const workout_sat = req.body.workout_sat;
+
+    // Save the reminders
+    try {
+      await db.query(
+        "INSERT INTO reminder (user_id, water_01, water_02, water_03, water_04, water_05, water_06, water_07, workout_sun, workout_mon, workout_tue, workout_wed, workout_thru, workout_fri, workout_sat) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [
+          req.loggedInUser.id,
+          water_01,
+          water_02,
+          water_03,
+          water_04,
+          water_05,
+          water_06,
+          water_07,
+          workout_sun,
+          workout_mon,
+          workout_tue,
+          workout_wed,
+          workout_thru,
+          workout_fri,
+          workout_sat,
+        ],
+      );
+    } catch (error) {
+      console.log("[ERROR]", error);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+
+    return res.status(201).json({ success: true });
+  },
+);
+
 // Utils
 // -----
 

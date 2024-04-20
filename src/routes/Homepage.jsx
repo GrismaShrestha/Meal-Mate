@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useUser } from "../hooks/auth";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import $axios from "../axios";
 import LoadingIndicator from "../components/LoadingIndicator";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 import { SlCalender } from "react-icons/sl";
 import { FaUserClock } from "react-icons/fa6";
 import { toast } from "react-toastify";
@@ -21,6 +23,7 @@ const weekDays = [
   "Friday",
   "Saturday",
 ];
+const weekDaysShort = ["sun", "mon", "tue", "wed", "thru", "fri", "sat"];
 
 export default function Homepage() {
   return (
@@ -206,9 +209,45 @@ function MealPlanEntry({ details }) {
 function Reminders() {
   const { data: user } = useUser();
 
-  const data = null;
+  const { data } = useQuery({
+    queryKey: ["user-reminders", user?.id],
+    queryFn: () =>
+      $axios
+        .get("/user/reminders")
+        .then((res) => res.data)
+        .catch(() => null),
+  });
 
   const { data: userMealPlan } = useUserMealPlan();
+
+  const pendingReminders = useMemo(() => {
+    if (!data) {
+      return null;
+    }
+
+    const result = { water: [], workout: null };
+
+    // Check if upcoming water reminders
+    for (let i = 1; i <= 7; i++) {
+      const waterEntry = data.reminders[`water_0${i}`];
+      if (waterEntry != "" && dayjs().isBefore(dayjs(waterEntry, "hh:mm a"))) {
+        result.water.push(waterEntry);
+      }
+    }
+
+    // Check if workout reminder is yet to come
+    const todayWorkoutTime =
+      data.reminders[`workout_${weekDaysShort[dayjs().day()]}`];
+    if (
+      todayWorkoutTime != "" &&
+      dayjs().isBefore(dayjs(todayWorkoutTime, "hh:mm a"))
+    ) {
+      result.workout = todayWorkoutTime;
+    }
+
+    return result;
+  }, [data]);
+
   if (!userMealPlan) {
     return null;
   }
@@ -234,26 +273,62 @@ function Reminders() {
     );
   }
 
-  const todayEntry = data.plan.find((d) => d.day == dayjs().day() + 1);
+  // const todayEntry = data.plan.find((d) => d.day == dayjs().day() + 1);
 
   return (
     <div className="container mb-5">
-      <h1 className="text-4xl font-semibold uppercase text-primary-dark">
-        Your today{`'`}s meal plan
+      <h1 className="mb-8 text-4xl font-semibold uppercase text-primary-dark">
+        Your today{`'`}s reminders
       </h1>
       <div className="p-2 pb-0">
-        <p className="text-gray-700">{weekDays[dayjs().day()]}</p>
-        <p className="text-gray-700">Total calories: {todayEntry.calories}</p>
-        <div className="mt-4 grid grid-cols-4 gap-8">
-          <MealPlanEntry details={todayEntry.meals["breakfast"]} />
-          <MealPlanEntry details={todayEntry.meals["snack"]} />
-          <MealPlanEntry details={todayEntry.meals["lunch"]} />
-          <MealPlanEntry details={todayEntry.meals["dinner"]} />
+        {pendingReminders.water.length == 0 && !pendingReminders.workout && (
+          <p className="my-5 text-center text-2xl">
+            No reminders left for today!
+          </p>
+        )}
+        <div className="flex justify-center gap-48">
+          {/* Water reminders */}
+          {pendingReminders.water.length > 0 && (
+            <div className="flex flex-col justify-start gap-4">
+              <p className="text-center text-5xl font-semibold text-primary">
+                Water
+              </p>
+              <img
+                src="/vector-graphics/water-glass.avif"
+                className="h-[240px] w-auto object-contain"
+              />
+              <div className="flex flex-col gap-1">
+                {pendingReminders.water.map((w) => (
+                  <p
+                    key={w}
+                    className="text-center text-2xl font-bold text-primary"
+                  >
+                    {w}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+          {/* Workout reminder */}
+          {pendingReminders.workout && (
+            <div className="flex flex-col justify-start gap-4">
+              <p className="text-center text-5xl font-semibold text-primary">
+                Workout
+              </p>
+              <img
+                src="/vector-graphics/workout.avif"
+                className="h-[240px] w-auto object-contain"
+              />
+              <p className="text-center text-6xl font-bold text-primary">
+                {pendingReminders.workout}
+              </p>
+            </div>
+          )}
         </div>
       </div>
-      <Link className="ml-auto block w-max" to="/user/reminders">
+      <Link className="ml-auto mt-4 block w-max" to="/user/reminders">
         <Button>
-          <FaUserClock className="mr-3 inline" /> View all reminders
+          <FaUserClock className="mr-3 inline" /> View your reminders
         </Button>
       </Link>
     </div>

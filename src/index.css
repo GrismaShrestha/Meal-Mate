@@ -55,4 +55,5 @@ body {
 
 .rc-time-picker-input {
   font-size: 14px !important;
+  outline: none;
 }
