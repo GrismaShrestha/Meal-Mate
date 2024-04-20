@@ -34,6 +34,7 @@ import UserDashboardLayout from "./routes/user/Layout";
 import ForgotPasswordPage from "./routes/ForgotPassword";
 import UserProfilePage from "./routes/user/Profile";
 import Reminders from "./routes/user/Reminders";
+import Meals from "./routes/admin/Meals";
 
 const queryClient = new QueryClient();
 
@@ -122,6 +123,10 @@ export function AuthCheck() {
         {
           path: "users/:id",
           element: <UserDetails />,
+        },
+        {
+          path: "meals",
+          element: <Meals />,
         },
       ],
     },

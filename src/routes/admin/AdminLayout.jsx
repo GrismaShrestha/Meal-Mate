@@ -5,6 +5,7 @@ import { RiUser3Line } from "react-icons/ri";
 import { RiUser3Fill } from "react-icons/ri";
 import { useAdmin } from "../../hooks/auth";
 import { useLocalStorage } from "usehooks-ts";
+import { GiMeal } from "react-icons/gi";
 
 export default function AdminLayout() {
   const { data: admin } = useAdmin();
@@ -30,6 +31,12 @@ export default function AdminLayout() {
             inactiveIcon={<RiUser3Line size={24} />}
             title={"Users"}
             href={"/users"}
+          />
+          <SidebarItem
+            activeIcon={<GiMeal size={24} />}
+            inactiveIcon={<GiMeal size={24} />}
+            title={"Meals"}
+            href={"/meals"}
           />
         </div>
       </div>

@@ -3,6 +3,22 @@ import { db } from "../db.js";
 
 export const mealRouter = express.Router();
 
+// All Meals
+// ---------
+
+mealRouter.get(
+  "/meal",
+  // The actual process
+  async (_req, res) => {
+    const [meals] = await db.query(
+      `SELECT *
+      FROM user_meal_plan_meal umpm
+      ORDER BY id DESC;`,
+    );
+    return res.json({ meals });
+  },
+);
+
 // Meal details
 // ------------
 
