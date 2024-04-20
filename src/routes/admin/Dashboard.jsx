@@ -1,12 +1,13 @@
 import { FaUserAlt } from "react-icons/fa";
 import { GiMeal } from "react-icons/gi";
-import { FaBookBookmark } from "react-icons/fa6";
 import { FaBlog } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 import { Chart } from "react-google-charts";
 import { useQuery } from "@tanstack/react-query";
 import $axios from "../../axios";
 import LoadingIndicator from "../../components/LoadingIndicator";
+import { RiAdminFill } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const { data, isLoading } = useQuery({
@@ -33,23 +34,23 @@ export default function Dashboard() {
             }}
           />
           <StatEntry
+            title="Total admins"
+            value={data.metrics.totalAdmins}
+            icon={<RiAdminFill size={30} color="white" />}
+            divStyle={{
+              backgroundColor: "#eb4786",
+              backgroundImage:
+                "linear-gradient(315deg, #eb4786 0%, #b854a6 74%)",
+            }}
+          />
+          <StatEntry
             title="Total meals"
-            value={10}
+            value={data.metrics.totalMeals}
             icon={<GiMeal size={40} color="white" />}
             divStyle={{
               backgroundColor: "#47c5f4",
               backgroundImage:
                 "linear-gradient(315deg, #47c5f4 0%, #6791d9 74%)",
-            }}
-          />
-          <StatEntry
-            title="Total recipes"
-            value={34}
-            icon={<FaBookBookmark size={30} color="white" />}
-            divStyle={{
-              backgroundColor: "#eb4786",
-              backgroundImage:
-                "linear-gradient(315deg, #eb4786 0%, #b854a6 74%)",
             }}
           />
           <StatEntry
@@ -63,13 +64,15 @@ export default function Dashboard() {
             }}
           />
         </div>
-        <StatCard title="Meals and Recipes" className="w-[500px] !p-0">
+        <StatCard title="Total Database" className="w-[500px] !p-0">
           <Chart
             chartType="PieChart"
             data={[
               ["Type", "Count"],
-              ["Recipes", 34],
-              ["Meals", 10],
+              ["Users", data.metrics.totalUsers],
+              ["Users with reminder", data.metrics.totalUsersWithReminder],
+              ["Meals", data.metrics.totalMeals],
+              ["Blogs", 8],
             ]}
             options={{
               is3D: true,
@@ -79,53 +82,35 @@ export default function Dashboard() {
           />
         </StatCard>
       </div>
-      <StatCard
-        title={"Recipe followers"}
-        style={{ height: 500, width: "100%" }}
-      >
+      <StatCard title={"User goals"} style={{ height: 500, width: "100%" }}>
         <Chart
           chartType="Bar"
           width="100%"
           height="400px"
           data={[
-            ["Recipe", "Followers"],
-            ["Black Bean and Sausage Soup", 1000],
-            ["Lentil, Vegetable and Tuna Salad", 1170],
-            ["Chorizo, potato & cheese omelette", 660],
-            ["Mediterranean Salmon Twist", 1030],
-            ["Pan-Fried Wild Salmon", 234],
-            ["Lemon Pepper Chicken Pitas", 229],
-            ["Paleo Bunless Burgers", 113],
-            ["Chargrilled Chicken Tostada Salad", 234],
-            ["Chicken and Cinnamon Apple", 534],
+            ["Goal", "Users"],
+            ["Maintain weight", data.userGoals["maintain-weight"]],
+            ["Mild weight loss", data.userGoals["mild-weight-loss"]],
+            ["Weight loss", data.userGoals["weight-loss"]],
+            ["Extreme weight loss", data.userGoals["extreme-weight-loss"]],
+            ["Mild weight gain", data.userGoals["mild-weight-gain"]],
+            ["Weight gain", data.userGoals["weight-gain"]],
+            ["Extreme weight gain", data.userGoals["extreme-weight-gain"]],
           ]}
           options={{
             chart: {
-              title: "Number of users adding a given recipe",
+              title: "Number of users with a given goal plan",
             },
           }}
         />
       </StatCard>
-      <StatCard title={"Most popular 4 meals"}>
+      <StatCard title={"Lastest 4 meals generated"}>
         <div
           style={{ display: "flex", gap: 20, justifyContent: "space-between" }}
         >
-          <MealEntry
-            id={1}
-            name="Peanut Butter Smoothie"
-            image="/temp/peanut_butter.jpg"
-          />
-          <MealEntry id={2} name="Spring Roll" image="/temp/spring_roll.jpeg" />
-          <MealEntry
-            id={3}
-            name="Quinoa Salad"
-            image="/temp/quenioa_salad.jpeg"
-          />
-          <MealEntry
-            id={4}
-            name="Asian Noodles"
-            image="/temp/asian_noodles.PNG"
-          />
+          {data.latestMeals.map((m) => (
+            <MealEntry key={m} id={m.id} name={m.name} image={m.main_image} />
+          ))}
         </div>
       </StatCard>
     </div>
@@ -183,9 +168,11 @@ function StatCard({ title, children, className }) {
 
 function MealEntry({ id, name, image }) {
   return (
-    <div className="flex h-[300px] w-[200px] flex-col" to={`/meals/${id}`}>
-      <img src={image} className="h-[250px] w-[200px] object-cover" />
-      <p className="my-4 text-center">{name}</p>
-    </div>
+    <Link to={`/meal/${id}`}>
+      <div className="flex h-[300px] w-[200px] flex-col" to={`/meals/${id}`}>
+        <img src={image} className="h-[250px] w-[200px] object-cover" />
+        <p className="my-4 text-center">{name}</p>
+      </div>
+    </Link>
   );
 }

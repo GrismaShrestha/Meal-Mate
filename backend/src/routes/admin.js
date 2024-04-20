@@ -11,11 +11,65 @@ adminRouter.get("/admin/dashboard", isAdmin, async (_, res) => {
   const totalUsers = await db
     .query("SELECT COUNT(*) AS count FROM user")
     .then(([res]) => res[0].count);
+  const totalAdmins = await db
+    .query("SELECT COUNT(*) AS count FROM admin")
+    .then(([res]) => res[0].count);
+  const totalMeals = await db
+    .query("SELECT COUNT(*) AS count FROM user_meal_plan_meal")
+    .then(([res]) => res[0].count);
+  const totalUsersWithReminder = await db
+    .query("SELECT COUNT(*) AS count FROM reminder")
+    .then(([res]) => res[0].count);
+
+  // Users with a goal plan
+  const usersWithGoalAsMaintainWeight = await db
+    .query("SELECT COUNT(*) AS count FROM user WHERE goal = 'maintain-weight'")
+    .then(([res]) => res[0].count);
+  const usersWithGoalAsMildWeightLoss = await db
+    .query("SELECT COUNT(*) AS count FROM user WHERE goal = 'wild-weight-loss'")
+    .then(([res]) => res[0].count);
+  const usersWithGoalAsWeightLoss = await db
+    .query("SELECT COUNT(*) AS count FROM user WHERE goal = 'weight-loss'")
+    .then(([res]) => res[0].count);
+  const usersWithGoalAsExtremeWeightLoss = await db
+    .query(
+      "SELECT COUNT(*) AS count FROM user WHERE goal = 'extreme-weight-loss'",
+    )
+    .then(([res]) => res[0].count);
+  const usersWithGoalAsMildWeightGain = await db
+    .query("SELECT COUNT(*) AS count FROM user WHERE goal = 'mild-weight-gain'")
+    .then(([res]) => res[0].count);
+  const usersWithGoalAsWeightGain = await db
+    .query("SELECT COUNT(*) AS count FROM user WHERE goal = 'weight-gain'")
+    .then(([res]) => res[0].count);
+  const usersWithGoalAsExtremeWeightGain = await db
+    .query(
+      "SELECT COUNT(*) AS count FROM user WHERE goal = 'extreme-weight-gain'",
+    )
+    .then(([res]) => res[0].count);
+
+  // Latest meals
+  const [latestMeals] = await db.query(
+    "SELECT id, name, main_image FROM user_meal_plan_meal ORDER BY id DESC LIMIT 4",
+  );
 
   const responseData = {
     metrics: {
       totalUsers,
+      totalAdmins,
+      totalUsersWithReminder,
+      totalMeals,
     },
+    userGoals: {
+      "maintain-weight": usersWithGoalAsMaintainWeight,
+      "mild-weight-loss": usersWithGoalAsMildWeightLoss,
+      "weight-loss": usersWithGoalAsWeightLoss,
+      "extreme-weight-loss": usersWithGoalAsExtremeWeightLoss,
+      "mild-weight-gain": usersWithGoalAsMildWeightGain,
+      "weight-gain": usersWithGoalAsWeightGain,
+      "extreme-weight-gain": usersWithGoalAsExtremeWeightGain,
+    },
+    latestMeals,
   };
   return res.json(responseData);
 });
