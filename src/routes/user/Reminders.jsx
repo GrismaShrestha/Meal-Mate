@@ -1,12 +1,16 @@
 import TimePicker from "rc-time-picker";
 import moment from "moment";
 import Button from "../../components/Button";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import $axios from "../../axios";
 import { toast } from "react-toastify";
+import { useUser } from "../../hooks/auth";
+import LoadingIndicator from "../../components/LoadingIndicator";
 
 export default function Reminders() {
   const queryClient = useQueryClient();
+  const { data: user } = useUser();
+
   const { mutate, isPending } = useMutation({
     mutationKey: ["update-reminders"],
     mutationFn: (values) => $axios.post("/user/reminders", values),
@@ -17,6 +21,18 @@ export default function Reminders() {
       });
     },
   });
+  const { data, isLoading } = useQuery({
+    queryKey: ["user-reminders", user?.id],
+    queryFn: () =>
+      $axios
+        .get("/user/reminders")
+        .then((res) => res.data)
+        .catch(() => null),
+  });
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <div className="p-8">
@@ -69,7 +85,7 @@ export default function Reminders() {
         <div className="my-3 flex gap-4">
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(7).minute(0)}
+            defaultValue={moment(data.reminders.water_01, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -78,7 +94,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(9).minute(0)}
+            defaultValue={moment(data.reminders.water_02, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -87,7 +103,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(11).minute(0)}
+            defaultValue={moment(data.reminders.water_03, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -96,7 +112,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(13).minute(0)}
+            defaultValue={moment(data.reminders.water_04, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -105,7 +121,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(15).minute(0)}
+            defaultValue={moment(data.reminders.water_05, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -114,7 +130,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(17).minute(0)}
+            defaultValue={moment(data.reminders.water_06, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -123,7 +139,7 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={moment().hour(19).minute(0)}
+            defaultValue={moment(data.reminders.water_07, "hh:mm a")}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -154,7 +170,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={moment().hour(7).minute(0)}
+                  defaultValue={
+                    data.reminders.workout_sun &&
+                    moment(data.reminders.workout_sun, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
@@ -165,7 +184,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={moment().hour(7).minute(0)}
+                  defaultValue={
+                    data.reminders.workout_mon &&
+                    moment(data.reminders.workout_mon, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
@@ -176,7 +198,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={moment().hour(7).minute(0)}
+                  defaultValue={
+                    data.reminders.workout_tue &&
+                    moment(data.reminders.workout_tue, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
@@ -187,7 +212,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={moment().hour(7).minute(0)}
+                  defaultValue={
+                    data.reminders.workout_wed &&
+                    moment(data.reminders.workout_wed, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
@@ -198,7 +226,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={moment().hour(7).minute(0)}
+                  defaultValue={
+                    data.reminders.workout_thru &&
+                    moment(data.reminders.workout_thru, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
@@ -209,7 +240,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={moment().hour(7).minute(0)}
+                  defaultValue={
+                    data.reminders.workout_fri &&
+                    moment(data.reminders.workout_fri, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
@@ -220,7 +254,10 @@ export default function Reminders() {
               <td className="px-4 py-2">
                 <TimePicker
                   showSecond={false}
-                  defaultValue={undefined}
+                  defaultValue={
+                    data.reminders.workout_sat &&
+                    moment(data.reminders.workout_sat, "hh:mm a")
+                  }
                   use12Hours
                   className="w-[80px]"
                   clearIcon={<button className="ml-4 text-xs">Remove</button>}
