@@ -4,11 +4,8 @@ import "ka-table/style.css";
 import { useQuery } from "@tanstack/react-query";
 import $axios from "../../axios";
 import LoadingIndicator from "../../components/LoadingIndicator";
-import dayjs from "dayjs";
 import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import Spinner from "../../components/Spinner";
 
 export default function Meals() {
   const { isLoading, data } = useQuery({
@@ -33,6 +30,7 @@ export default function Meals() {
           style: { textTransform: "capitalize" },
         },
         { key: "calories", title: "Calories", dataType: DataType.Number },
+        { key: "actions", title: "Actions", width: 150 },
       ]}
       data={data.meals}
       rowKeyField={"id"}
@@ -42,6 +40,17 @@ export default function Meals() {
             <Link to={`/meal/${rowData.id}`}>
               <img src={rowData.main_image} />
             </Link>
+          );
+        }
+        if (column.key == "actions") {
+          return (
+            <div className="flex flex-col">
+              <Link to={`/admin/meals/${rowData.id}`}>
+                <button className="flex items-center gap-2 text-green-600 hover:underline">
+                  <MdEdit /> Edit
+                </button>
+              </Link>
+            </div>
           );
         }
         return value;

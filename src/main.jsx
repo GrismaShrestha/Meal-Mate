@@ -29,6 +29,7 @@ import LoginAdmin from "./routes/admin/Login";
 import UserDetails from "./routes/admin/UserDetails";
 import MealPlanForm from "./routes/user/MealPlanForm";
 import MealDetails from "./routes/meal/MealDetails";
+import MealDetailsAdmin from "./routes/admin/MealDetails";
 import UserDashboard from "./routes/user/Dashboard";
 import UserDashboardLayout from "./routes/user/Layout";
 import ForgotPasswordPage from "./routes/ForgotPassword";
@@ -127,6 +128,10 @@ export function AuthCheck() {
         {
           path: "meals",
           element: <Meals />,
+        },
+        {
+          path: "meals/:id",
+          element: <MealDetailsAdmin />,
         },
       ],
     },
