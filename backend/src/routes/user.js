@@ -550,6 +550,91 @@ userRouter.post(
   },
 );
 
+// Favourite meals list
+// --------------------
+
+userRouter.get("/user/favourite-meal", isUser, async (req, res) => {
+  const [favMeals] = await db.query(
+    "SELECT meal_id FROM user_favourite_meal WHERE user_id = ?",
+    [req.loggedInUser.id],
+  );
+
+  return res.json({
+    meal_ids: favMeals.map((m) => m.meal_id),
+  });
+});
+
+// Favourite a meal
+// ----------------
+
+userRouter.post(
+  "/user/favourite-meal",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    const mealId = req.body.mealId;
+
+    // First check if the meal is already favourite of the current user
+    const [favMeals] = await db.query(
+      "SELECT * FROM user_favourite_meal WHERE user_id = ? AND meal_id = ?",
+      [req.loggedInUser.id, mealId],
+    );
+    if (favMeals.length > 0) {
+      return res.status(409).json({
+        message: "The given meal is already the favourite of user",
+      });
+    }
+
+    // Add the meal to favourite
+    try {
+      await db.query(
+        "INSERT INTO user_favourite_meal (user_id, meal_id) VALUES (?, ?)",
+        [req.loggedInUser.id, mealId],
+      );
+    } catch (error) {
+      console.log("[ERROR]", error);
+      return res
+        .status(500)
+        .json({ message: "Could not add the meal to favourites" });
+    }
+
+    return res
+      .status(201)
+      .json({ message: "Meal added to favourite successfully!" });
+  },
+);
+
+// Unfavourite a meal
+// ----------------
+
+userRouter.post(
+  "/user/unfavourite-meal",
+  // Allow only logged in users
+  isUser,
+  // The actual process
+  async (req, res) => {
+    const mealId = req.body.mealId;
+
+    // Remove the meal from favourites
+    try {
+      await db.query(
+        "DELETE FROM user_favourite_meal WHERE user_id = ? AND meal_id = ?",
+        [req.loggedInUser.id, mealId],
+      );
+    } catch (error) {
+      console.log("[ERROR]", error);
+      return res
+        .status(500)
+        .json({ message: "Could not remove the meal from favourites" });
+    }
+
+    return res
+      .status(201)
+      .json({ message: "Meal removed from favourites successfully!" });
+  },
+);
+
 // Utils
 // -----
 

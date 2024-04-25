@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import $axios from "../../axios";
 import { MdAccessTimeFilled } from "react-icons/md";
 import Modal from "react-modal";
@@ -7,6 +7,8 @@ import { useState } from "react";
 import Button from "../../components/Button";
 import { FaStar } from "react-icons/fa";
 import { FaWeight } from "react-icons/fa";
+import { useUser } from "../../hooks/auth";
+import { toast } from "react-toastify";
 
 export default function MealDetails() {
   const params = useParams();
@@ -20,6 +22,54 @@ export default function MealDetails() {
         .then((res) => res.data.meal)
         .catch(() => null),
   });
+
+  // Favourite meals list
+  const { data: user } = useUser();
+  const { data: favouriteMeals, isLoading: isLoadingFavouriteMeals } = useQuery(
+    {
+      queryKey: ["favourite-meals", user.id],
+      queryFn: () =>
+        $axios
+          .get(`/user/favourite-meal`)
+          .then((res) => res.data.meal_ids)
+          .catch(() => null),
+    },
+  );
+
+  // Add to favourite
+  const queryClient = useQueryClient();
+  const { mutate: addToFavourite, isPending: isAddingToFavourite } =
+    useMutation({
+      mutationKey: ["add-to-favourite", data?.id],
+      mutationFn: () =>
+        $axios.post("/user/favourite-meal", { mealId: data.id }),
+      onSuccess: () => {
+        toast.success("Meal added to favourites successfully!");
+        queryClient.refetchQueries({
+          queryKey: ["favourite-meals"],
+        });
+      },
+      onError: (error) => {
+        toast.error(error.response.data.message);
+      },
+    });
+
+  // Remove from favourites
+  const { mutate: removeFromFavourites, isPending: isRemovingFromFavourites } =
+    useMutation({
+      mutationKey: ["remove-from-favourites", data?.id],
+      mutationFn: () =>
+        $axios.post("/user/unfavourite-meal", { mealId: data.id }),
+      onSuccess: () => {
+        toast.success("Meal removed from favourites successfully!");
+        queryClient.refetchQueries({
+          queryKey: ["favourite-meals"],
+        });
+      },
+      onError: (error) => {
+        toast.error(error.response.data.message);
+      },
+    });
 
   const [showDetailedNutritions, setShowDetailedNutritions] = useState(false);
 
@@ -89,9 +139,26 @@ export default function MealDetails() {
           >
             Show detailed nutritions
           </button>
-          <Button className="mt-1 self-center">
-            <FaStar className="mr-2 inline" size={18} /> Favourite
-          </Button>
+          {!isLoadingFavouriteMeals &&
+            (favouriteMeals.includes(data.id) ? (
+              <Button
+                className="mt-1 self-center"
+                onClick={() => removeFromFavourites()}
+                loading={isRemovingFromFavourites}
+                color="white"
+              >
+                <FaStar className="mr-2 inline" size={18} /> Remove from
+                favourites
+              </Button>
+            ) : (
+              <Button
+                className="mt-1 self-center"
+                onClick={() => addToFavourite()}
+                loading={isAddingToFavourite}
+              >
+                <FaStar className="mr-2 inline" size={18} /> Favourite
+              </Button>
+            ))}
         </div>
       </div>
 
