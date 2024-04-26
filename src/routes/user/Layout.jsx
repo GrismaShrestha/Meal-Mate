@@ -4,6 +4,7 @@ import { GiMeal } from "react-icons/gi";
 import { twMerge } from "tailwind-merge";
 import { FaUserClock } from "react-icons/fa6";
 import { FaUserAlt } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 export default function UserDashboardLayout() {
   const { data: user } = useUser();
@@ -54,6 +55,18 @@ export default function UserDashboardLayout() {
             >
               <FaUserAlt className="mr-4 inline" size={24} />
               User Profile
+            </button>
+          </Link>
+          <Link to="/user/favourites">
+            <button
+              className={twMerge(
+                "w-full rounded-xl py-2 text-[1.1rem] font-bold text-gray-400",
+                location.pathname == "/user/favourites" &&
+                  "bg-[#252627] text-white",
+              )}
+            >
+              <FaStar className="mr-4 inline" size={24} />
+              Favourites
             </button>
           </Link>
         </div>

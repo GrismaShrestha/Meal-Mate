@@ -31,7 +31,7 @@ export default function MealDetails() {
       queryFn: () =>
         $axios
           .get(`/user/favourite-meal`)
-          .then((res) => res.data.meal_ids)
+          .then((res) => res.data.favMeals)
           .catch(() => null),
     },
   );
@@ -140,7 +140,7 @@ export default function MealDetails() {
             Show detailed nutritions
           </button>
           {!isLoadingFavouriteMeals &&
-            (favouriteMeals.includes(data.id) ? (
+            (favouriteMeals.map((m) => m.meal_id).includes(data.id) ? (
               <Button
                 className="mt-1 self-center"
                 onClick={() => removeFromFavourites()}

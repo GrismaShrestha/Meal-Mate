@@ -36,6 +36,7 @@ import ForgotPasswordPage from "./routes/ForgotPassword";
 import UserProfilePage from "./routes/user/Profile";
 import Reminders from "./routes/user/Reminders";
 import Meals from "./routes/admin/Meals";
+import UserFavouritesPage from "./routes/user/Favourites";
 
 const queryClient = new QueryClient();
 
@@ -158,6 +159,10 @@ export function AuthCheck() {
         {
           path: "profile",
           element: <UserProfilePage />,
+        },
+        {
+          path: "favourites",
+          element: <UserFavouritesPage />,
         },
       ],
     },

@@ -555,12 +555,15 @@ userRouter.post(
 
 userRouter.get("/user/favourite-meal", isUser, async (req, res) => {
   const [favMeals] = await db.query(
-    "SELECT meal_id FROM user_favourite_meal WHERE user_id = ?",
+    `SELECT *
+    FROM user_favourite_meal ufm
+    INNER JOIN user_meal_plan_meal umpm ON ufm.meal_id = umpm.id
+    WHERE user_id = ?`,
     [req.loggedInUser.id],
   );
 
   return res.json({
-    meal_ids: favMeals.map((m) => m.meal_id),
+    favMeals
   });
 });
 
