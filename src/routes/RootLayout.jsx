@@ -4,6 +4,7 @@ import { RxCaretRight } from "react-icons/rx";
 import { useUser } from "../hooks/auth";
 import { useLocalStorage } from "usehooks-ts";
 import { toast } from "react-toastify";
+import { FaUserAlt } from "react-icons/fa";
 
 const headerLinks = [
   {
@@ -98,6 +99,8 @@ export default function RootLayout() {
 }
 
 function Header() {
+  const { data: user } = useUser();
+
   return (
     <header className="bg-primary-dark text-gray-100">
       <div className="container flex items-center justify-between py-2">
@@ -114,6 +117,9 @@ function Header() {
                 <Link to={l.href}>{l.title}</Link>
               </button>
             ))}
+            <button className="text-xl font-semibold uppercase transition-colors duration-500 hover:text-primary-light">
+              {user && <Link to={"/user/profile"}>Your profile</Link>}
+            </button>
           </div>
           <Auth />
         </div>
@@ -130,11 +136,9 @@ function Auth() {
     <div className="flex items-center gap-4">
       {user ? (
         <>
+          <FaUserAlt size={23} color="white" className="inline-block" />
           <div>
             <p>Hi! {user.name}</p>
-            <Link to="/user/profile">
-              <p className="text-sm hover:underline">Your profile</p>
-            </Link>
           </div>
           <Button
             onClick={() => {

@@ -6,6 +6,8 @@ import { RiUser3Fill } from "react-icons/ri";
 import { useAdmin } from "../../hooks/auth";
 import { useLocalStorage } from "usehooks-ts";
 import { GiMeal } from "react-icons/gi";
+import Button from "../../components/Button";
+import { FaUserAlt } from "react-icons/fa";
 
 export default function AdminLayout() {
   const { data: admin } = useAdmin();
@@ -43,11 +45,11 @@ export default function AdminLayout() {
       <div className="flex flex-grow flex-col">
         <div className="menu-bar !py-4">
           <p className="text-xl">Meal Mate Dashboard</p>
-          <div className="flex flex-col items-end">
-            <p>{admin.name}</p>
-            <button className="hover:underline" onClick={() => removeToken()}>
+          <div className="flex gap-8 items-end">
+            <p className="mb-2"><FaUserAlt size={18} color="gray" className="inline-block mr-2" /> {admin.name}</p>
+            <Button onClick={() => removeToken()}>
               Logout
-            </button>
+            </Button>
           </div>
         </div>
         <div className="flex-grow bg-[#F8F8FA] p-5">
