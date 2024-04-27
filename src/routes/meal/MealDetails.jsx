@@ -9,10 +9,14 @@ import { FaStar } from "react-icons/fa";
 import { FaWeight } from "react-icons/fa";
 import { useUser } from "../../hooks/auth";
 import { toast } from "react-toastify";
+import { FaAngleLeft } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 export default function MealDetails() {
   const params = useParams();
   const mealId = params.mealId;
+
+  const navigate = useNavigate();
 
   const { data } = useQuery({
     queryKey: ["meal-details", mealId],
@@ -83,6 +87,13 @@ export default function MealDetails() {
 
   return (
     <div className="container flex-grow py-6">
+      <button
+        className="flex items-center gap-2 hover:underline"
+        onClick={() => navigate(-1)}
+      >
+        <FaAngleLeft className="inline" /> <p>Go back</p>
+      </button>
+
       <div className="mb-6 text-center">
         <h1 className="text-3xl font-semibold">{data.name}</h1>
         <p className="font-medium capitalize">{data.meal}</p>
