@@ -5,6 +5,7 @@ import { authAdminRouter } from "./routes/auth-admin.js";
 import { adminRouter } from "./routes/admin.js";
 import { userRouter } from "./routes/user.js";
 import { mealRouter } from "./routes/meal.js";
+import { initRemindersOfAllUsers } from "./reminder.js";
 
 const app = express();
 const port = 3000;
@@ -22,6 +23,8 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).json({ message: "Something went wrong! Please try again" });
 });
+
+await initRemindersOfAllUsers();
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

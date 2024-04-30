@@ -2,6 +2,7 @@ import express from "express";
 import { db } from "../db.js";
 import { isUser } from "../guards/auth.js";
 import otpGenerator from "otp-generator";
+import { initRemindersOfAUser, removeReminderOfUser } from "../reminder.js";
 
 export const userRouter = express.Router();
 
@@ -545,6 +546,9 @@ userRouter.post(
       console.log("[ERROR]", error);
       return res.status(500).json({ message: "Something went wrong" });
     }
+
+    removeReminderOfUser(req.loggedInUser.phone);
+    await initRemindersOfAUser(req.loggedInUser.phone)
 
     return res.status(201).json({ success: true });
   },
