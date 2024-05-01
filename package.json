@@ -11,6 +11,8 @@
     "format": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.3.1",
+    "@ckeditor/ckeditor5-react": "^6.3.0",
     "@fontsource/inter": "^5.0.17",
     "@tanstack/react-query": "^5.28.14",
     "axios": "^1.6.8",
@@ -26,6 +28,7 @@
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5",
     "tailwind-merge": "^2.2.2",
+    "truncate-html": "^1.1.1",
     "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {

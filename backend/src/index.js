@@ -6,6 +6,7 @@ import { adminRouter } from "./routes/admin.js";
 import { userRouter } from "./routes/user.js";
 import { mealRouter } from "./routes/meal.js";
 import { initRemindersOfAllUsers } from "./reminder.js";
+import { blogRouter } from "./routes/blog.js";
 
 const app = express();
 const port = 3000;
@@ -19,6 +20,7 @@ app.use(authAdminRouter);
 app.use(adminRouter);
 app.use(userRouter);
 app.use(mealRouter);
+app.use(blogRouter);
 app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).json({ message: "Something went wrong! Please try again" });

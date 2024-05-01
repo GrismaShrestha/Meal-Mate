@@ -8,6 +8,8 @@ import { useLocalStorage } from "usehooks-ts";
 import { GiMeal } from "react-icons/gi";
 import Button from "../../components/Button";
 import { FaUserAlt } from "react-icons/fa";
+import { BiLogoBlogger } from "react-icons/bi";
+import { TbBrandBlogger } from "react-icons/tb";
 
 export default function AdminLayout() {
   const { data: admin } = useAdmin();
@@ -40,16 +42,23 @@ export default function AdminLayout() {
             title={"Meals"}
             href={"/meals"}
           />
+          <SidebarItem
+            activeIcon={<BiLogoBlogger size={24} />}
+            inactiveIcon={<TbBrandBlogger size={24} />}
+            title={"Blogs"}
+            href={"/blogs"}
+          />
         </div>
       </div>
       <div className="flex flex-grow flex-col">
         <div className="menu-bar !py-4">
           <p className="text-xl">Meal Mate Dashboard</p>
-          <div className="flex gap-8 items-end">
-            <p className="mb-2"><FaUserAlt size={18} color="gray" className="inline-block mr-2" /> {admin.name}</p>
-            <Button onClick={() => removeToken()}>
-              Logout
-            </Button>
+          <div className="flex items-end gap-8">
+            <p className="mb-2">
+              <FaUserAlt size={18} color="gray" className="mr-2 inline-block" />{" "}
+              {admin.name}
+            </p>
+            <Button onClick={() => removeToken()}>Logout</Button>
           </div>
         </div>
         <div className="flex-grow bg-[#F8F8FA] p-5">
@@ -62,7 +71,8 @@ export default function AdminLayout() {
 
 function SidebarItem({ activeIcon, inactiveIcon, title, href }) {
   const { pathname } = useLocation();
-  const isActive = pathname === `/admin${href}`;
+  const isActive =
+    href == "" ? pathname == "/admin" : pathname.startsWith(`/admin${href}`);
 
   return (
     <Link

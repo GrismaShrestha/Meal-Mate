@@ -37,6 +37,9 @@ import UserProfilePage from "./routes/user/Profile";
 import Reminders from "./routes/user/Reminders";
 import Meals from "./routes/admin/Meals";
 import UserFavouritesPage from "./routes/user/Favourites";
+import Blogs from "./routes/admin/Blogs";
+import BlogAdd from "./routes/admin/BlogAdd";
+import BlogEdit from "./routes/admin/BlogEdit";
 
 const queryClient = new QueryClient();
 
@@ -133,6 +136,18 @@ export function AuthCheck() {
         {
           path: "meals/:id",
           element: <MealDetailsAdmin />,
+        },
+        {
+          path: "blogs",
+          element: <Blogs />,
+        },
+        {
+          path: "blogs/add",
+          element: <BlogAdd />,
+        },
+        {
+          path: "blogs/:id",
+          element: <BlogEdit />,
         },
       ],
     },
