@@ -40,6 +40,8 @@ import UserFavouritesPage from "./routes/user/Favourites";
 import Blogs from "./routes/admin/Blogs";
 import BlogAdd from "./routes/admin/BlogAdd";
 import BlogEdit from "./routes/admin/BlogEdit";
+import BlogsList from "./routes/Blogs";
+import BlogDetails from "./routes/BlogDetails";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +77,14 @@ export function AuthCheck() {
         {
           path: "/meal/:mealId",
           element: <MealDetails />,
+        },
+        {
+          path: "/blogs",
+          element: <BlogsList />,
+        },
+        {
+          path: "/blogs/:id",
+          element: <BlogDetails />,
         },
       ],
     },

@@ -12,6 +12,10 @@ const headerLinks = [
     href: "/",
   },
   {
+    title: "Blogs",
+    href: "/blogs",
+  },
+  {
     title: "Planner",
     href: "/user",
   },
