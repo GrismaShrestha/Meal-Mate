@@ -349,7 +349,7 @@ function DiscoverMeals() {
       {isLoading ? (
         <LoadingIndicator hideLabel />
       ) : (
-        <div className="flex gap-5">
+        <div className="grid grid-cols-4 gap-5">
           {data.map((d) => (
             <MealEntry
               key={d.id}
@@ -366,7 +366,7 @@ function DiscoverMeals() {
 
 function MealEntry({ id, name, image }) {
   return (
-    <Link className="flex h-[350px] w-[350px] flex-col" to={`/meal/${id}`}>
+    <Link className="flex h-[350px] flex-col" to={`/meal/${id}`}>
       <img src={image} className="h-[100px] w-[350px] flex-grow object-cover" />
       <p className="my-4 text-center text-2xl">{name}</p>
       <Button className={"text-center text-white"}>Try now</Button>
