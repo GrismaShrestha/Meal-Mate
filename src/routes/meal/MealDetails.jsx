@@ -31,7 +31,7 @@ export default function MealDetails() {
   const { data: user } = useUser();
   const { data: favouriteMeals, isLoading: isLoadingFavouriteMeals } = useQuery(
     {
-      queryKey: ["favourite-meals", user.id],
+      queryKey: ["favourite-meals", user?.id],
       queryFn: () =>
         $axios
           .get(`/user/favourite-meal`)
@@ -150,7 +150,8 @@ export default function MealDetails() {
           >
             Show detailed nutritions
           </button>
-          {!isLoadingFavouriteMeals &&
+          {!!user &&
+            !isLoadingFavouriteMeals &&
             (favouriteMeals.map((m) => m.meal_id).includes(data.id) ? (
               <Button
                 className="mt-1 self-center"
