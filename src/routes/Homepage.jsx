@@ -336,36 +336,37 @@ function Reminders() {
 }
 
 function DiscoverMeals() {
+  const { isLoading, data } = useQuery({
+    queryKey: ["discover-meals"],
+    queryFn: () => $axios.get("/discover-meals").then((res) => res.data.meals),
+  });
+
   return (
     <div className="container">
       <h1 className="mb-4 text-4xl font-semibold uppercase text-primary-dark">
         Discover Meals
       </h1>
-      <div className="flex gap-5">
-        <MealEntry
-          id={1}
-          name="Peanut Butter Smoothie"
-          image="/temp/peanut_butter.jpg"
-        />
-        <MealEntry id={2} name="Spring Roll" image="/temp/spring_roll.jpeg" />
-        <MealEntry
-          id={3}
-          name="Quinoa Salad"
-          image="/temp/quenioa_salad.jpeg"
-        />
-        <MealEntry
-          id={4}
-          name="Asian Noodles"
-          image="/temp/asian_noodles.PNG"
-        />
-      </div>
+      {isLoading ? (
+        <LoadingIndicator hideLabel />
+      ) : (
+        <div className="flex gap-5">
+          {data.map((d) => (
+            <MealEntry
+              key={d.id}
+              id={d.id}
+              name={d.name}
+              image={d.main_image}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
 function MealEntry({ id, name, image }) {
   return (
-    <Link className="flex h-[350px] w-[350px] flex-col" to={`/meals/${id}`}>
+    <Link className="flex h-[350px] w-[350px] flex-col" to={`/meal/${id}`}>
       <img src={image} className="h-[100px] w-[350px] flex-grow object-cover" />
       <p className="my-4 text-center text-2xl">{name}</p>
       <Button className={"text-center text-white"}>Try now</Button>

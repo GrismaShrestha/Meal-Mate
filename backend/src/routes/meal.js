@@ -42,6 +42,23 @@ mealRouter.get(
   },
 );
 
+// Discover meals
+// --------------
+
+mealRouter.get(
+  "/discover-meals",
+  // The actual process
+  async (_req, res) => {
+    const [meals] = await db.query(
+      `SELECT *
+      FROM user_meal_plan_meal umpm
+      ORDER BY rand()
+      LIMIT 4;`,
+    );
+    return res.json({ meals });
+  },
+);
+
 // Update meal details
 // -------------------
 
