@@ -20,6 +20,9 @@ adminRouter.get("/admin/dashboard", isAdmin, async (_, res) => {
   const totalUsersWithReminder = await db
     .query("SELECT COUNT(*) AS count FROM reminder")
     .then(([res]) => res[0].count);
+  const totalBlogs = await db
+    .query("SELECT COUNT(*) AS count FROM blog")
+    .then(([res]) => res[0].count);
 
   // Users with a goal plan
   const usersWithGoalAsMaintainWeight = await db
@@ -59,6 +62,7 @@ adminRouter.get("/admin/dashboard", isAdmin, async (_, res) => {
       totalAdmins,
       totalUsersWithReminder,
       totalMeals,
+      totalBlogs,
     },
     userGoals: {
       "maintain-weight": usersWithGoalAsMaintainWeight,

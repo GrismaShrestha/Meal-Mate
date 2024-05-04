@@ -55,7 +55,7 @@ export default function Dashboard() {
           />
           <StatEntry
             title="Total blogs"
-            value={8}
+            value={data.metrics.totalBlogs}
             icon={<FaBlog size={30} color="white" />}
             divStyle={{
               backgroundColor: "#ffb72c",
@@ -72,7 +72,7 @@ export default function Dashboard() {
               ["Users", data.metrics.totalUsers],
               ["Users with reminder", data.metrics.totalUsersWithReminder],
               ["Meals", data.metrics.totalMeals],
-              ["Blogs", 8],
+              ["Blogs", data.metrics.totalBlogs],
             ]}
             options={{
               is3D: true,
