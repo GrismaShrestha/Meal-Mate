@@ -21,7 +21,8 @@ export default function Blogs() {
 
   return (
     <div className="container flex-grow">
-      <div className="mt-6 flex flex-col gap-6">
+      <div className="mt-8 flex flex-col gap-6">
+        <p className="mb-4 text-4xl font-semibold text-gray-800">All Blogs</p>
         {data.length == 0 && <p>No blogs</p>}
         {data.map((d) => (
           <div key={d.id} className="flex items-center gap-6">
@@ -29,7 +30,7 @@ export default function Blogs() {
               to={`/blogs/${d.id}`}
               className="text-xl font-semibold hover:underline"
             >
-              <div className="h-[64px] w-[200px] min-w-[200px]">
+              <div className="h-[64px] w-[300px] min-w-[200px]">
                 <img src={d.banner} className="h-full w-full object-contain" />
               </div>
             </Link>
