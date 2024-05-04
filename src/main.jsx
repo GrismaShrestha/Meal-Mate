@@ -79,7 +79,12 @@ export function AuthCheck() {
         },
         {
           path: "/meal/:mealId",
-          element: <MealDetails />,
+          element:
+            user != null ? (
+              <MealDetails />
+            ) : (
+              <Navigate to="/login/user" replace />
+            ),
         },
         {
           path: "/blogs",
@@ -91,7 +96,8 @@ export function AuthCheck() {
         },
         {
           path: "/recipes",
-          element: <Recipes />,
+          element:
+            user != null ? <Recipes /> : <Navigate to="/login/user" replace />,
         },
         {
           path: "/about",
