@@ -13,6 +13,7 @@ mealRouter.get(
     const [meals] = await db.query(
       `SELECT *
       FROM user_meal_plan_meal umpm
+      GROUP BY umpm.name
       ORDER BY id DESC;`,
     );
     return res.json({ meals });
