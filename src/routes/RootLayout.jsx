@@ -5,6 +5,8 @@ import { useUser } from "../hooks/auth";
 import { useLocalStorage } from "usehooks-ts";
 import { toast } from "react-toastify";
 import { FaUserAlt } from "react-icons/fa";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const headerLinks = [
   {
@@ -39,19 +41,15 @@ const footerLinks = [
       },
       {
         name: "About",
-        href: "/",
+        href: "/about",
       },
       {
         name: "Settings",
-        href: "/",
-      },
-      {
-        name: "Help",
-        href: "/",
+        href: "/user/profile",
       },
       {
         name: "Terms and policies",
-        href: "/",
+        href: "/terms",
       },
     ],
   },
@@ -60,15 +58,15 @@ const footerLinks = [
     links: [
       {
         name: "Customization of meals",
-        href: "/",
+        href: "/user",
       },
       {
         name: "Reminder system",
-        href: "/",
+        href: "/user/reminders",
       },
       {
         name: "Recipes",
-        href: "/",
+        href: "/recipes",
       },
     ],
   },
@@ -76,22 +74,19 @@ const footerLinks = [
     title: "Others",
     links: [
       {
-        name: "Gifts",
-        href: "/",
-      },
-      {
-        name: "Articles",
-        href: "/",
-      },
-      {
-        name: "Ratings",
-        href: "/",
+        name: "Blogs",
+        href: "/blogs",
       },
     ],
   },
 ];
 
 export default function RootLayout() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   return (
     <>
       <Header />

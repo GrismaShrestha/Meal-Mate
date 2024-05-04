@@ -43,6 +43,8 @@ import BlogEdit from "./routes/admin/BlogEdit";
 import BlogsList from "./routes/Blogs";
 import BlogDetails from "./routes/BlogDetails";
 import Recipes from "./routes/Recipes";
+import About from "./routes/About";
+import Terms from "./routes/Terms";
 
 const queryClient = new QueryClient();
 
@@ -89,7 +91,15 @@ export function AuthCheck() {
         },
         {
           path: "/recipes",
-          element: <Recipes />
+          element: <Recipes />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/terms",
+          element: <Terms />,
         },
       ],
     },
