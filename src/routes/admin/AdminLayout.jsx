@@ -42,12 +42,12 @@ export default function AdminLayout() {
             title={"Meals"}
             href={"/meals"}
           />
-          <SidebarItem
-            activeIcon={<BiLogoBlogger size={24} />}
-            inactiveIcon={<TbBrandBlogger size={24} />}
-            title={"Blogs"}
-            href={"/blogs"}
-          />
+          {/* <SidebarItem */}
+          {/*   activeIcon={<BiLogoBlogger size={24} />} */}
+          {/*   inactiveIcon={<TbBrandBlogger size={24} />} */}
+          {/*   title={"Blogs"} */}
+          {/*   href={"/blogs"} */}
+          {/* /> */}
         </div>
       </div>
       <div className="flex flex-grow flex-col">
