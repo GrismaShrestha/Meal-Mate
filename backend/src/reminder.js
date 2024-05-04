@@ -81,7 +81,9 @@ export function removeReminderOfUser(phone) {
   }
 
   for (const job of reminderJobs) {
-    job.cancel();
+    if (job != null) {
+      job.cancel();
+    }
   }
   delete reminders[phone];
 }

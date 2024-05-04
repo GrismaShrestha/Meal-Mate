@@ -2,7 +2,7 @@ import $axios from "../../axios";
 import Button from "../../components/Button";
 import Select from "../../components/Select";
 import TextInput from "../../components/TextInput";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/auth";
@@ -10,6 +10,7 @@ import LoadingIndicator from "../../components/LoadingIndicator";
 
 export default function MealPlanForm() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data: user } = useUser();
   const { data, isLoading } = useQuery({
@@ -24,6 +25,9 @@ export default function MealPlanForm() {
     onSuccess: () => {
       toast.success("Your meal plan has been generated!");
       navigate("/user", { replace: true });
+      queryClient.refetchQueries({
+        queryKey: ["user-settings"],
+      });
     },
     onError: (error) => {
       toast.error(error.response.data.message);
