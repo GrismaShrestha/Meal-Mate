@@ -5,8 +5,10 @@ import { useState } from "react";
 import TextInput from "../components/TextInput";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
+import Select from "../components/Select";
 
 export default function Recipes() {
+  const [searchBy, setSearchBy] = useState("meal-name");
   const [search, setSearch] = useState("");
 
   const { isLoading, data } = useQuery({
@@ -25,15 +27,37 @@ export default function Recipes() {
   return (
     <div className="container my-6 flex-grow">
       <p className="mb-4 text-3xl font-semibold">Search Meals for Recipes</p>
-      <TextInput
-        placeholder="Search for meal"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        autoFocus
-      />
+      <div className="flex items-end gap-3">
+        <Select
+          label="Search by"
+          value={searchBy}
+          onChange={(e) => {
+            setSearch("");
+            setSearchBy(e.target.value);
+          }}
+        >
+          <option value="meal-name">By meal name</option>
+          <option value="ingredients">By ingredients</option>
+        </Select>
+        <TextInput
+          placeholder={
+            searchBy == "meal-name" ? "Meal name" : "Ingredient name"
+          }
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+          rootClassName="flex-grow"
+        />
+      </div>
       <div className="mb-4 mt-6 grid grid-cols-4 gap-10">
         {data
-          .filter((d) => d.name.toLowerCase().includes(search.toLowerCase()))
+          .filter((d) => {
+            if (searchBy == "meal-name") {
+              return d.name.toLowerCase().includes(search.toLowerCase());
+            } else {
+              return d.ingredients.toLowerCase().includes(search.toLowerCase());
+            }
+          })
           .map((d) => (
             <MealEntry
               key={d.id}
