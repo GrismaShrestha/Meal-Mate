@@ -124,7 +124,8 @@ export function setRemindersOfUser(
   }
 
   // Workout
-  for (const time of workoutReminders) {
+  for (let i = 0; i < workoutReminders.length; i++) {
+    const time = workoutReminders[i];
     if (time == "") {
       continue;
     }
@@ -134,7 +135,7 @@ export function setRemindersOfUser(
     }
 
     const rule = new schedule.RecurrenceRule();
-    rule.dayOfWeek = [new schedule.Range(0, 6)];
+    rule.dayOfWeek = [i];
     rule.hour = timeParsed.hour();
     rule.minute = timeParsed.minute();
 
