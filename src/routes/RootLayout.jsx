@@ -13,10 +13,10 @@ const headerLinks = [
     title: "Home",
     href: "/",
   },
-  // {
-  //   title: "Blogs",
-  //   href: "/blogs",
-  // },
+  {
+    title: "Blogs",
+    href: "/blogs",
+  },
   {
     title: "Planner",
     href: "/user",
