@@ -69,8 +69,8 @@ userRouter.post(
           method: "POST",
           headers: {
             "Content-Type": "Application/JSON",
-            Authorization: "Token 618cfa9fb35baa83a37c67472e5f6b8047987b99",
-            "sg-user": "cdf16aa0-42fe-4de9-a4f9-f2bcb57594f6",
+            Authorization: "Token 016bcc936c64f34ff5e3203fdbf66a5412d7d894",
+            "sg-user": "ec2c2e10-8439-44e2-ad71-15dd0f7a374f",
           },
           body: JSON.stringify({
             query: `mutation updateMealPlanSettings {
@@ -103,8 +103,8 @@ userRouter.post(
           method: "POST",
           headers: {
             "Content-Type": "Application/JSON",
-            Authorization: "Token 618cfa9fb35baa83a37c67472e5f6b8047987b99",
-            "sg-user": "cdf16aa0-42fe-4de9-a4f9-f2bcb57594f6",
+            Authorization: "Token 016bcc936c64f34ff5e3203fdbf66a5412d7d894",
+            "sg-user": "ec2c2e10-8439-44e2-ad71-15dd0f7a374f",
           },
           body: JSON.stringify({
             query: `mutation {
@@ -132,8 +132,8 @@ userRouter.post(
           method: "POST",
           headers: {
             "Content-Type": "Application/JSON",
-            Authorization: "Token 618cfa9fb35baa83a37c67472e5f6b8047987b99",
-            "sg-user": "cdf16aa0-42fe-4de9-a4f9-f2bcb57594f6",
+            Authorization: "Token 016bcc936c64f34ff5e3203fdbf66a5412d7d894",
+            "sg-user": "ec2c2e10-8439-44e2-ad71-15dd0f7a374f",
           },
           body: JSON.stringify({
             query: `{
