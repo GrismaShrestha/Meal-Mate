@@ -45,6 +45,7 @@ import BlogDetails from "./routes/BlogDetails";
 import Recipes from "./routes/Recipes";
 import About from "./routes/About";
 import Terms from "./routes/Terms";
+import FAQ from "./routes/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -106,6 +107,10 @@ export function AuthCheck() {
         {
           path: "/terms",
           element: <Terms />,
+        },
+        {
+          path: "/faq",
+          element: <FAQ />,
         },
       ],
     },

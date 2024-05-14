@@ -77,6 +77,10 @@ const footerLinks = [
         name: "Blogs",
         href: "/blogs",
       },
+      {
+        name: "FAQ",
+        href: "/faq",
+      },
     ],
   },
 ];
