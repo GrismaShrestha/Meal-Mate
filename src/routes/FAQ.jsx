@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export default function Terms() {
+export default function FAQ() {
   useEffect(() => {
     function toggleAccordion() {
       this.classList.toggle("active");
