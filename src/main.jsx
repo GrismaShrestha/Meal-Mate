@@ -46,6 +46,7 @@ import Recipes from "./routes/Recipes";
 import About from "./routes/About";
 import Terms from "./routes/Terms";
 import FAQ from "./routes/FAQ";
+import RateUs from "./routes/RateUs";
 
 const queryClient = new QueryClient();
 
@@ -111,6 +112,10 @@ export function AuthCheck() {
         {
           path: "/faq",
           element: <FAQ />,
+        },
+        {
+          path: "/rate-us",
+          element: <RateUs />,
         },
       ],
     },

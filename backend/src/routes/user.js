@@ -548,7 +548,7 @@ userRouter.post(
     }
 
     removeReminderOfUser(req.loggedInUser.phone);
-    await initRemindersOfAUser(req.loggedInUser.phone)
+    await initRemindersOfAUser(req.loggedInUser.phone);
 
     return res.status(201).json({ success: true });
   },
@@ -567,7 +567,7 @@ userRouter.get("/user/favourite-meal", isUser, async (req, res) => {
   );
 
   return res.json({
-    favMeals
+    favMeals,
   });
 });
 
@@ -639,6 +639,41 @@ userRouter.post(
     return res
       .status(201)
       .json({ message: "Meal removed from favourites successfully!" });
+  },
+);
+
+// Get current rating from user (if available)
+// -------------------------------------------
+
+userRouter.get(
+  "/user/rating",
+  // Allow only logged in users
+  isUser,
+  async (req, res) => {
+    const [result] = await db.query("SELECT * FROM rating WHERE user_id = ?", [
+      req.loggedInUser.id,
+    ]);
+
+    return res.json(result.at(0));
+  },
+);
+
+userRouter.post(
+  "/user/rating",
+  // Allow only logged in users
+  isUser,
+  async (req, res) => {
+    try {
+      await db.query(
+        "INSERT INTO rating (user_id, rating, content) VALUES (?, ?, ?)",
+        [req.loggedInUser.id, req.body.rating, req.body.content],
+      );
+    } catch (error) {
+      console.log("[ERROR]", error);
+      return res.status(500).json({ message: "Could not add user rating" });
+    }
+
+    return res.status(201).json({ success: true });
   },
 );
 

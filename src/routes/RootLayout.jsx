@@ -81,6 +81,10 @@ const footerLinks = [
         name: "FAQ",
         href: "/faq",
       },
+      {
+        name: "Rate us!",
+        href: "/rate-us",
+      },
     ],
   },
 ];
