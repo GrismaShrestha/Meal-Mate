@@ -115,7 +115,8 @@ export function AuthCheck() {
         },
         {
           path: "/rate-us",
-          element: <RateUs />,
+          element:
+            user != null ? <RateUs /> : <Navigate to="/login/user" replace />,
         },
       ],
     },
