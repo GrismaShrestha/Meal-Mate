@@ -10,6 +10,8 @@ import Button from "../../components/Button";
 import { FaUserAlt } from "react-icons/fa";
 import { BiLogoBlogger } from "react-icons/bi";
 import { TbBrandBlogger } from "react-icons/tb";
+import { MdOutlineStarRate } from "react-icons/md";
+import { MdStarRate } from "react-icons/md";
 
 export default function AdminLayout() {
   const { data: admin } = useAdmin();
@@ -47,6 +49,12 @@ export default function AdminLayout() {
             inactiveIcon={<TbBrandBlogger size={24} />}
             title={"Blogs"}
             href={"/blogs"}
+          />
+          <SidebarItem
+            activeIcon={<MdStarRate size={24} />}
+            inactiveIcon={<MdOutlineStarRate size={24} />}
+            title={"User ratings"}
+            href={"/user-ratings"}
           />
         </div>
       </div>

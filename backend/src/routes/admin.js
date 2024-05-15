@@ -127,3 +127,12 @@ adminRouter.delete("/admin/user/:id", isAdmin, async (req, res) => {
 
   return res.json({ success: true });
 });
+
+// Get all user reviews
+// --------------------
+
+adminRouter.get("/admin/user-ratings", isAdmin, async (_req, res) => {
+  const [result] = await db.query("SELECT user.name, rating.* FROM rating LEFT JOIN user ON rating.user_id = user.id");
+
+  return res.json({ ratings: result });
+});

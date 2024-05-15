@@ -47,6 +47,7 @@ import About from "./routes/About";
 import Terms from "./routes/Terms";
 import FAQ from "./routes/FAQ";
 import RateUs from "./routes/RateUs";
+import UserRatings from "./routes/admin/UserRatings";
 
 const queryClient = new QueryClient();
 
@@ -190,6 +191,10 @@ export function AuthCheck() {
         {
           path: "blogs/:id",
           element: <BlogEdit />,
+        },
+        {
+          path: "user-ratings",
+          element: <UserRatings />,
         },
       ],
     },
