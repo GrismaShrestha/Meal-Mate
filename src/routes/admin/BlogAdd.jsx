@@ -92,8 +92,7 @@ export default function BlogAdd() {
             id="content"
             editor={ClassicEditor}
             config={{
-              toolbar: ["heading", "bold", "italic"],
-            }}
+              toolbar: ["heading", "bold", "italic", "numberedList", "bulletedList"], }}
             data={content}
             onChange={(_, e) => {
               setContent(e.getData());

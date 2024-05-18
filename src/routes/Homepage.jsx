@@ -33,6 +33,8 @@ export default function Homepage() {
       <DiscoverMeals />
       <Poll />
       <OurServices />
+      <FAQ />
+      <RateUs />
     </main>
   );
 }
@@ -466,7 +468,6 @@ function OurServices() {
           description="Explore our extensive database of delicious and nutritious recipes tailored to your tastes and dietary needs."
         />
       </div>
-      <FAQ />
     </div>
   );
 }
@@ -515,7 +516,9 @@ function FAQ() {
   return (
     <div className="container py-7">
       <div>
-        <h1 className="mb-6 text-4xl font-bold text-primary-dark">Frequently Asked Questions</h1>
+        <h1 className="mb-6 text-4xl font-bold text-primary-dark">
+          Frequently Asked Questions
+        </h1>
 
         <button className="accordion">
           What are the requirements to generate my meal plan?
@@ -571,6 +574,23 @@ function FAQ() {
           <p>No. For now our reminder system is free of cost.</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+function RateUs() {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <img
+        src="/rate-us-app.png"
+        alt="Rate us"
+        className="mb-4 h-auto w-[180px] object-contain"
+      />
+      <p className="font-semibold">Like using our platform?</p>
+      <p className="font-semibold text-gray-400">Leave us some review</p>
+      <Link to="/rate-us">
+        <Button className="mt-4">Rate us</Button>
+      </Link>
     </div>
   );
 }
