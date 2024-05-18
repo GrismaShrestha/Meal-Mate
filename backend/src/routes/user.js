@@ -239,8 +239,8 @@ userRouter.post(
 
       // Save the meal gen settings
       await db.query(
-        "UPDATE user SET age = ?, gender = ?, height = ?, weight = ?, activity_level = ?, goal = ?",
-        [age, gender, height, weight, activitylevel, goal],
+        "UPDATE user SET age = ?, gender = ?, height = ?, weight = ?, activity_level = ?, goal = ? WHERE id = ?",
+        [age, gender, height, weight, activitylevel, goal, req.loggedInUser.id],
       );
 
       return res.status(201).json({ success: true });
