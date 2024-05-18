@@ -22,3 +22,19 @@ h4 {
 .ck-editor p {
   @apply my-3;
 }
+
+.ck-content ul, ol {
+  @apply pl-6;
+}
+
+.ck-content ul {
+  @apply list-disc;
+}
+
+.ck-content ol {
+  @apply list-decimal;
+}
+
+.ck-balloon-panel {
+  display: none !important;
+}
