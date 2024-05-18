@@ -43,7 +43,7 @@ userRouter.post(
 
       // Fetch the BMR from API
       const bmr = await fetch(
-        "https://fitness-calculator.p.rapidapi.com/dailycalorie?" +
+        "https://edargo.com/api/fitness-calculator?" +
           new URLSearchParams({
             age,
             gender,
