@@ -82,6 +82,7 @@ export default function Reminders() {
             workout_sat,
           });
         }}
+        autoComplete={false}
       >
         {/* Water intakes */}
         <h2 className="mb-2 text-xl font-medium">Water intakes</h2>
