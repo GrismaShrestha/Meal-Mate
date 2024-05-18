@@ -108,7 +108,7 @@ function Header() {
   const { data: user } = useUser();
 
   return (
-    <header className="bg-primary-dark text-gray-100 sticky top-0 z-[999999]">
+    <header className="bg-primary-dark text-gray-100 sticky top-0 z-[999]">
       <div className="container flex items-center justify-between py-2">
         <Link to="/" className="block w-[120px]">
           <img src="/logo.png" alt="Meal Mate" className="h-auto w-full" />
