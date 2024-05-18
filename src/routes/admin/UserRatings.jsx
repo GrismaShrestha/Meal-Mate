@@ -31,7 +31,7 @@ export default function UserRatings() {
             >
               <span className="font-semibold">{d.name}</span> rated us{" "}
               <span className="font-semibold">{d.rating} stars</span> at{" "}
-              {dayjs(d.created_at).format("YYYY-MM-DD hh:mm A")}
+              {dayjs(d.created_at).format("YYYY-MM-DD")}
             </li>
           ))}
         </ul>
