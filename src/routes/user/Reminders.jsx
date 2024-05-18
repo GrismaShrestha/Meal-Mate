@@ -38,6 +38,14 @@ export default function Reminders() {
     <div className="p-8">
       <h1 className="mb-6 text-4xl font-medium">Your reminders</h1>
 
+      {!data && (
+        <p className="mb-4 text-center font-semibold text-green-500">
+          We have setup you with our recommended defaults. Currently the given
+          settings are not live. Please tweak them according to your needs and
+          click on Save to make your reminders live.
+        </p>
+      )}
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -81,11 +89,13 @@ export default function Reminders() {
           Select the times throughout the day at which you want to be reminded
           about your water intake:
         </p>
-        <p className="text-sm text-gray-500">Start with our recommended plan</p>
         <div className="my-3 flex gap-4">
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_01 && moment(data?.reminders?.water_01, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_01 ? data?.reminders?.water_01 : "08:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -94,7 +104,10 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_02 && moment(data?.reminders?.water_02, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_02 ? data?.reminders?.water_02 : "10:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -103,7 +116,10 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_03 && moment(data?.reminders?.water_03, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_03 ? data?.reminders?.water_03 : "12:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -112,7 +128,10 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_04 && moment(data?.reminders?.water_04, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_04 ? data?.reminders?.water_04 : "14:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -121,7 +140,10 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_05 && moment(data?.reminders?.water_05, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_05 ? data?.reminders?.water_05 : "16:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -130,7 +152,10 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_06 && moment(data?.reminders?.water_06, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_06 ? data?.reminders?.water_06 : "18:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -139,7 +164,10 @@ export default function Reminders() {
           />
           <TimePicker
             showSecond={false}
-            defaultValue={data?.reminders?.water_07 && moment(data?.reminders?.water_07, "hh:mm a")}
+            defaultValue={moment(
+              data?.reminders?.water_07 ? data?.reminders?.water_07 : "20:00",
+              "hh:mm a",
+            )}
             use12Hours
             className="w-[80px]"
             clearIcon={null}
@@ -154,7 +182,6 @@ export default function Reminders() {
           Select the times throughout the week at which you want to be reminded
           about your workout:
         </p>
-        <p className="text-sm text-gray-500">Start with our recommended plan</p>
         <div className="my-3 flex gap-2">
           <table className="p-2">
             <tr>
@@ -171,8 +198,9 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data?.reminders?.workout_sun &&
-                    moment(data?.reminders?.workout_sun, "hh:mm a")
+                    data?.reminders?.workout_sun
+                      ? moment(data?.reminders?.workout_sun, "hh:mm a")
+                      : moment("18:00", "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -185,8 +213,9 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data?.reminders?.workout_mon &&
-                    moment(data?.reminders?.workout_mon, "hh:mm a")
+                    data?.reminders?.workout_mon
+                      ? moment(data?.reminders?.workout_mon, "hh:mm a")
+                      : moment("18:00", "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -199,8 +228,9 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data?.reminders?.workout_tue &&
-                    moment(data?.reminders?.workout_tue, "hh:mm a")
+                    data?.reminders?.workout_tue
+                      ? moment(data?.reminders?.workout_tue, "hh:mm a")
+                      : moment("18:00", "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -227,8 +257,9 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data?.reminders?.workout_thru &&
-                    moment(data?.reminders?.workout_thru, "hh:mm a")
+                    data?.reminders?.workout_thru
+                      ? moment(data?.reminders?.workout_thru, "hh:mm a")
+                      : moment("18:00", "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
@@ -241,8 +272,9 @@ export default function Reminders() {
                 <TimePicker
                   showSecond={false}
                   defaultValue={
-                    data?.reminders?.workout_fri &&
-                    moment(data?.reminders?.workout_fri, "hh:mm a")
+                    data?.reminders?.workout_fri
+                      ? moment(data?.reminders?.workout_fri, "hh:mm a")
+                      : moment("18:00", "hh:mm a")
                   }
                   use12Hours
                   className="w-[80px]"
