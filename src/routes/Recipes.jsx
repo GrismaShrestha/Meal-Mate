@@ -6,10 +6,13 @@ import TextInput from "../components/TextInput";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import Select from "../components/Select";
+import ReactPaginate from 'react-paginate';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export default function Recipes() {
   const [searchBy, setSearchBy] = useState("meal-name");
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
   const { isLoading, data } = useQuery({
     queryKey: ["meals"],
@@ -33,6 +36,7 @@ export default function Recipes() {
           value={searchBy}
           onChange={(e) => {
             setSearch("");
+            setPage(1);
             setSearchBy(e.target.value);
           }}
         >
@@ -44,13 +48,17 @@ export default function Recipes() {
             searchBy == "meal-name" ? "Meal name" : "Ingredient name"
           }
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
           autoFocus
           rootClassName="flex-grow"
         />
       </div>
       <div className="mb-4 mt-6 grid grid-cols-4 gap-10">
         {data
+          .slice((page - 1) * 10, ((page - 1) * 10) + 12)
           .filter((d) => {
             if (searchBy == "meal-name") {
               return d.name.toLowerCase().includes(search.toLowerCase());
@@ -67,6 +75,20 @@ export default function Recipes() {
             />
           ))}
       </div>
+
+      <ReactPaginate
+        breakLabel="..."
+        nextLabel={<FaAngleRight />}
+        previousLabel={<FaAngleLeft />}
+        forcePage={page - 1}
+        onPageChange={(e) => {
+          setPage(e.selected + 1);
+          window.scrollTo(0, 0);
+        }}
+        pageCount={Math.ceil(data.length / 12)}
+        renderOnZeroPageCount={null}
+        containerClassName="pagination"
+      />
     </div>
   );
 }

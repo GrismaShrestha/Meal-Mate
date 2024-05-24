@@ -24,6 +24,7 @@ body {
   position: absolute;
   z-index: -1;
 }
+
 .login-section::before {
   top: -165px;
   right: -130px;
@@ -87,7 +88,8 @@ body {
 }
 
 .accordion:after {
-  content: "\02795"; /* Unicode character for "plus" sign (+) */
+  content: "\02795";
+  /* Unicode character for "plus" sign (+) */
   font-size: 13px;
   color: #777;
   float: right;
@@ -95,5 +97,46 @@ body {
 }
 
 .active:after {
-  content: "\2796"; /* Unicode character for "minus" sign (-) */
+  content: "\2796";
+  /* Unicode character for "minus" sign (-) */
+}
+
+.pagination {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0 5rem;
+  gap: 10px;
+  align-items: center;
+}
+
+.pagination li a {
+  border-radius: 7px;
+  padding: 0.1rem 1rem;
+  border: gray 1px solid;
+  cursor: pointer;
+}
+
+.pagination li.previous a,
+.pagination li.next a,
+.pagination li.break a {
+  border-color: transparent;
+}
+
+.pagination li.selected a {
+  background-color: #4C7838;
+  border-color: transparent;
+  color: white;
+  min-width: 32px;
+}
+
+.pagination li.disabled a {
+  color: grey;
+}
+
+.pagination li.disable,
+.pagination li.disabled a {
+  cursor: default;
 }
