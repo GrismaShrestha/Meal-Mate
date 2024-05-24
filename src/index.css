@@ -132,6 +132,10 @@ body {
   min-width: 32px;
 }
 
+.pagination-admin li.selected a {
+  background-color: #3D4B64;
+}
+
 .pagination li.disabled a {
   color: grey;
 }
