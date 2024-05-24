@@ -126,7 +126,7 @@ body {
 }
 
 .pagination li.selected a {
-  background-color: #4C7838;
+  background-color: #4c7838;
   border-color: transparent;
   color: white;
   min-width: 32px;

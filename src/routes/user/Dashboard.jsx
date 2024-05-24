@@ -15,6 +15,7 @@ import { CiSettings } from "react-icons/ci";
 import { CiRedo } from "react-icons/ci";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
+import { FaDownload } from "react-icons/fa";
 
 const weekDays = [
   "Sunday",
@@ -182,6 +183,17 @@ export default function UserDashboard() {
               <MealPlanEntry details={dayEntry.meals["lunch"]} />
               <MealPlanEntry details={dayEntry.meals["dinner"]} />
             </div>
+
+            <Link
+              to="/user/download-plan"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button color="purple" className={"mt-6 px-16 text-2xl"}>
+                <FaDownload className="mr-5" />
+                Download your meal plan
+              </Button>
+            </Link>
 
             <div className="mt-8 w-full bg-[#F99D00] bg-opacity-80 p-10 text-center">
               <p className="text-3xl font-bold text-white">

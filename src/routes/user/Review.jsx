@@ -1,13 +1,13 @@
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import $axios from "../../axios";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import ReactStars from "react-stars";
 import TextAreaInput from "../../components/TextAreaInput";
 import dayjs from "dayjs";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function UserReviewPage() {
-  const {isLoading, data} = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["user-rating"],
     queryFn: () => $axios.get("/user/rating").then((res) => res.data),
   });
@@ -18,10 +18,12 @@ export default function UserReviewPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-semibold mb-8">Your review</h1>
-      {data ?
+      <h1 className="mb-8 text-3xl font-semibold">Your review</h1>
+      {data ? (
         <div>
-          <p className="text-gray-500 font-semibold mb-4">You had submitted your review on {dayjs(data.created_at).format("YYYY-MM-DD")}
+          <p className="mb-4 font-semibold text-gray-500">
+            You had submitted your review on{" "}
+            {dayjs(data.created_at).format("YYYY-MM-DD")}
           </p>
           <div className="mb-4">
             <p className="text-gray-400">Your rating:</p>
@@ -43,8 +45,16 @@ export default function UserReviewPage() {
               readOnly
             />
           </div>
-        </div> : <p>You are yet to submit your review. <Link to={"/rate-us"} className="text-primary font-bold underline">Click here</Link>.</p>
-      }
+        </div>
+      ) : (
+        <p>
+          You are yet to submit your review.{" "}
+          <Link to={"/rate-us"} className="font-bold text-primary underline">
+            Click here
+          </Link>
+          .
+        </p>
+      )}
     </div>
   );
 }

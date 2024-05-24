@@ -23,7 +23,8 @@ h4 {
   @apply my-3;
 }
 
-.ck-content ul, ol {
+.ck-content ul,
+ol {
   @apply pl-6;
 }
 

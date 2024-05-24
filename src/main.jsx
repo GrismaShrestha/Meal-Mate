@@ -49,6 +49,7 @@ import FAQ from "./routes/FAQ";
 import RateUs from "./routes/RateUs";
 import UserRatings from "./routes/admin/UserRatings";
 import UserReviewPage from "./routes/user/Review";
+import DownloadPlan from "./routes/user/PlanDownload";
 
 const queryClient = new QueryClient();
 
@@ -232,6 +233,10 @@ export function AuthCheck() {
           element: <UserReviewPage />,
         },
       ],
+    },
+    {
+      path: "/user/download-plan",
+      element: <DownloadPlan />,
     },
     {
       path: "/user/meal-plan-form",

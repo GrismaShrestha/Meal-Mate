@@ -6,7 +6,7 @@ import TextInput from "../components/TextInput";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import Select from "../components/Select";
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from "react-paginate";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 export default function Recipes() {
@@ -58,7 +58,7 @@ export default function Recipes() {
       </div>
       <div className="mb-4 mt-6 grid grid-cols-4 gap-10">
         {data
-          .slice((page - 1) * 10, ((page - 1) * 10) + 12)
+          .slice((page - 1) * 10, (page - 1) * 10 + 12)
           .filter((d) => {
             if (searchBy == "meal-name") {
               return d.name.toLowerCase().includes(search.toLowerCase());

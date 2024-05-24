@@ -14,7 +14,7 @@ export default function RegisterUser() {
     mutationFn: (values) => $axios.post("/user/register", values),
     onSuccess: () => {
       toast.success("User created successfully!");
-      navigate("/login/user")
+      navigate("/login/user");
     },
     onError: (error) => {
       toast.error(error.response.data.message);

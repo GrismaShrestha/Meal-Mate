@@ -21,7 +21,7 @@ export default function UserFavouritesPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-semibold mb-8">Your favourite meals</h1>
+      <h1 className="mb-8 text-3xl font-semibold">Your favourite meals</h1>
 
       {data.length == 0 && <p>No meals added to favourite yet.</p>}
 

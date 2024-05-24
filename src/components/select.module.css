@@ -1,5 +1,5 @@
 select:required:invalid {
-  color: #D1D5DB;
+  color: #d1d5db;
 }
 option[value=""][disabled] {
   display: none;
