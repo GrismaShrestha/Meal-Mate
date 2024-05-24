@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { FaUserClock } from "react-icons/fa6";
 import { FaUserAlt } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
+import { MdReviews } from "react-icons/md";
 
 export default function UserDashboardLayout() {
   const { data: user } = useUser();
@@ -67,6 +68,18 @@ export default function UserDashboardLayout() {
             >
               <FaStar className="mr-4 inline" size={24} />
               Favourites
+            </button>
+          </Link>
+          <Link to="/user/review">
+            <button
+              className={twMerge(
+                "w-full rounded-xl py-2 text-[1.1rem] font-bold text-gray-400",
+                location.pathname == "/user/review" &&
+                  "bg-[#252627] text-white",
+              )}
+            >
+              <MdReviews className="mr-4 inline" size={24} />
+              Review
             </button>
           </Link>
         </div>

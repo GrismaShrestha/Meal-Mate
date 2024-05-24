@@ -48,6 +48,7 @@ import Terms from "./routes/Terms";
 import FAQ from "./routes/FAQ";
 import RateUs from "./routes/RateUs";
 import UserRatings from "./routes/admin/UserRatings";
+import UserReviewPage from "./routes/user/Review";
 
 const queryClient = new QueryClient();
 
@@ -225,6 +226,10 @@ export function AuthCheck() {
         {
           path: "favourites",
           element: <UserFavouritesPage />,
+        },
+        {
+          path: "review",
+          element: <UserReviewPage />,
         },
       ],
     },
