@@ -58,7 +58,7 @@ export default function Recipes() {
       </div>
       <div className="mb-4 mt-6 grid grid-cols-4 gap-10">
         {data
-          .slice((page - 1) * 10, (page - 1) * 10 + 10)
+          .slice((page - 1) * 12, (page - 1) * 12 + 12)
           .filter((d) => {
             if (searchBy == "meal-name") {
               return d.name.toLowerCase().includes(search.toLowerCase());
